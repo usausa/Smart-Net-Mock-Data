@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Usa.Smart.Mock.Data</id>
+    <version>1.0.0</version>
+    <title>Smart mock data library for .NET</title>
+    <authors>machi_pon</authors>
+    <owners>machi_pon</owners>
+    <description>Smart mock data library for .NET</description>
+    <releaseNotes></releaseNotes>
+    <summary>Smart mock data library for .NET</summary>
+    <projectUrl>https://github.com/usausa/Smart-Net-Mock-Data</projectUrl>
+    <copyright></copyright>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <dependencies>
+    </dependencies>
+    <tags>Smart pcl</tags>
+  </metadata>
+  <files>
+    <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.dll" target="lib\net451\Smart.Mock.Data.dll" />
+    <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.pdb" target="lib\net451\Smart.Mock.Data.pdb" />
+    <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.xml" target="lib\net451\Smart.Mock.Data.xml" />
+  </files>
+</package>

@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>..\Smart.ruleset</CodeAnalysisRuleSet>
     <RunCodeAnalysis>true</RunCodeAnalysis>
+    <DocumentationFile>bin\Release\Smart.Mock.Data.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -46,6 +47,7 @@
     <Compile Include="Data\MockDbParameter.cs" />
     <Compile Include="Data\MockDbParameterCollection.cs" />
     <Compile Include="Data\MockDbTransaction.cs" />
+    <Compile Include="Data\TransactionStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

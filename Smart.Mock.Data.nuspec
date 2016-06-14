@@ -14,7 +14,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <dependencies>
     </dependencies>
-    <tags>Smart Data Mock</tags>
+    <tags>smart ado.net mock</tags>
   </metadata>
   <files>
     <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.dll" target="lib\net451\Smart.Mock.Data.dll" />

@@ -2,8 +2,8 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Usa.Smart.Mock.Data</id>
-    <version>1.0.1</version>
-    <title>Smart mock data library for .NET</title>
+    <version>1.0.2</version>
+    <title>Smart.Mock.Data</title>
     <authors>machi_pon</authors>
     <owners>machi_pon</owners>
     <description>Smart mock data library for .NET</description>

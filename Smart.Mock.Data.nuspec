@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Usa.Smart.Mock.Data</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <title>Smart mock data library for .NET</title>
     <authors>machi_pon</authors>
     <owners>machi_pon</owners>
@@ -14,7 +14,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <dependencies>
     </dependencies>
-    <tags>Smart pcl</tags>
+    <tags>Smart Data Mock</tags>
   </metadata>
   <files>
     <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.dll" target="lib\net451\Smart.Mock.Data.dll" />

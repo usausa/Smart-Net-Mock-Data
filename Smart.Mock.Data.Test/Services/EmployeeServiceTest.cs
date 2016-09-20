@@ -5,6 +5,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using Smart.Mock.Data;
+    using Smart.Mock.Data.SqlServer;
     using Smart.Mock.Infrastructure;
 
     /// <summary>
@@ -18,7 +19,7 @@
         /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Ignore")]
         [TestMethod]
-        public void TestQueryEmployeeList()
+        public void QueryEmployeeList()
         {
             var columns = new[]
             {
@@ -42,6 +43,9 @@
 
             // Assert
             Assert.AreEqual(3, list.Count);
+
+            var result = connection.ValidateSql();
+            Assert.IsTrue(result.Valid, result.ToString());
         }
     }
 }

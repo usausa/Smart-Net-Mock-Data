@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Usa.Smart.Mock.Data</id>
-    <version>1.0.2</version>
+    <version>1.0.3.0</version>
     <title>Smart.Mock.Data .NET</title>
     <authors>machi_pon</authors>
     <owners>machi_pon</owners>
@@ -17,8 +17,8 @@
     <tags>smart ado.net mock</tags>
   </metadata>
   <files>
-    <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.dll" target="lib\net451\Smart.Mock.Data.dll" />
-    <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.pdb" target="lib\net451\Smart.Mock.Data.pdb" />
-    <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.xml" target="lib\net451\Smart.Mock.Data.xml" />
+    <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.dll" target="lib\net462\Smart.Mock.Data.dll" />
+    <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.pdb" target="lib\net462\Smart.Mock.Data.pdb" />
+    <file src="Smart.Mock.Data\bin\Release\Smart.Mock.Data.xml" target="lib\net462\Smart.Mock.Data.xml" />
   </files>
 </package>

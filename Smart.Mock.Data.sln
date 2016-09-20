@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Mock.Data", "Smart.Mock.Data\Smart.Mock.Data.csproj", "{2909BB19-9842-46A0-9954-D857927C43ED}"
 EndProject
@@ -10,9 +10,13 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FBC27566-6AF8-489D-A810-3F5F56A891C6}"
 	ProjectSection(SolutionItems) = preProject
 		Local.testsettings = Local.testsettings
+		Smart.Mock.Data.nuspec = Smart.Mock.Data.nuspec
+		Smart.Mock.Data.ruleset = Smart.Mock.Data.ruleset
 		Smart.Mock.Data.sln.DotSettings = Smart.Mock.Data.sln.DotSettings
-		Smart.ruleset = Smart.ruleset
+		Smart.Mock.Data.SqlServer.nuspec = Smart.Mock.Data.SqlServer.nuspec
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Mock.Data.SqlServer", "Smart.Mock.Data.SqlServer\Smart.Mock.Data.SqlServer.csproj", "{A6265C47-6495-42A7-BC4C-7591AC8A45E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +32,10 @@ Global
 		{48F05AB2-E4A9-4CB7-8A02-24FDD65C44EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{48F05AB2-E4A9-4CB7-8A02-24FDD65C44EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{48F05AB2-E4A9-4CB7-8A02-24FDD65C44EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6265C47-6495-42A7-BC4C-7591AC8A45E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6265C47-6495-42A7-BC4C-7591AC8A45E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6265C47-6495-42A7-BC4C-7591AC8A45E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6265C47-6495-42A7-BC4C-7591AC8A45E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,8 +9,15 @@
     /// </summary>
     public class MockDbParameterCollection : List<MockDbParameter>, IDataParameterCollection
     {
+        /// <summary>
+        ///
+        /// </summary>
         public MockDbCommand Command { get; private set; }
 
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="command"></param>
         public MockDbParameterCollection(MockDbCommand command)
         {
             Command = command;

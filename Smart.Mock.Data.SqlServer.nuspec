@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>Usa.Smart.Mock.Data.SqlServer</id>
+    <version>0.3.0.0</version>
+    <title>Smart.Mock.Data.SqlServer .NET</title>
+    <authors>machi_pon</authors>
+    <owners>machi_pon</owners>
+    <description>Smart mock data library SQL Server extensions for .NET</description>
+    <releaseNotes></releaseNotes>
+    <summary>Smart mock data library SQL Server extensions for .NET</summary>
+    <projectUrl>https://github.com/usausa/Smart-Net-Mock-Data</projectUrl>
+    <copyright></copyright>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <dependencies>
+      <dependency id="Usa.Smart.Mock.Data" version="1.0.3" />
+      <dependency id="Microsoft.SqlServer.TransactSql.ScriptDom" version="13.0.1601.5" />
+    </dependencies>
+    <tags>smart ado.net mock sqlserver</tags>
+  </metadata>
+  <files>
+    <file src="Smart.Mock.Data.SqlServer\bin\Release\Smart.Mock.Data.SqlServer.dll" target="lib\net462\Smart.Mock.Data.SqlServer.dll" />
+    <file src="Smart.Mock.Data.SqlServer\bin\Release\Smart.Mock.Data.SqlServer.pdb" target="lib\net462\Smart.Mock.Data.SqlServer.pdb" />
+    <file src="Smart.Mock.Data.SqlServer\bin\Release\Smart.Mock.Data.SqlServer.xml" target="lib\net462\Smart.Mock.Data.SqlServer.xml" />
+  </files>
+</package>

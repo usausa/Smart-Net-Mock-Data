@@ -5,6 +5,7 @@
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     using Smart.Mock.Data;
+    using Smart.Mock.Data.SqlServer;
     using Smart.Mock.Infrastructure;
 
     /// <summary>
@@ -16,9 +17,9 @@
         /// <summary>
         ///
         /// </summary>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:スコープを失う前にオブジェクトを破棄", Justification = "Ignore")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Ignore")]
         [TestMethod]
-        public void TestQueryEmployeeList()
+        public void QueryEmployeeList()
         {
             var columns = new[]
             {
@@ -27,9 +28,9 @@
             };
             var rows = new List<object[]>
             {
-                new object[] { 1, "従業員1" },
-                new object[] { 2, "従業員2" },
-                new object[] { 3, "従業員3" }
+                new object[] { 1, "Employee1" },
+                new object[] { 2, "Employee2" },
+                new object[] { 3, "Employee3" }
             };
 
             var connection = new MockDbConnection();
@@ -42,6 +43,9 @@
 
             // Assert
             Assert.AreEqual(3, list.Count);
+
+            var result = connection.ValidateSql();
+            Assert.IsTrue(result.Valid, result.ToString());
         }
     }
 }

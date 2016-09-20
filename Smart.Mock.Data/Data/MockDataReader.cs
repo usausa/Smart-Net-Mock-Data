@@ -67,6 +67,9 @@
             }
         }
 
+        /// <summary>
+        ///
+        /// </summary>
         public int FieldCount
         {
             get

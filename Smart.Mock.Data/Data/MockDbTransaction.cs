@@ -5,16 +5,6 @@
     /// <summary>
     ///
     /// </summary>
-    public enum TransactionStatus
-    {
-        Unknown,
-        Commited,
-        RollBacked,
-    }
-
-    /// <summary>
-    ///
-    /// </summary>
     public sealed class MockDbTransaction : IDbTransaction
     {
         /// <summary>

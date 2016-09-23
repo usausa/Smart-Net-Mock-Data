@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\SqlServer\DefaultParser.cs" />
+    <Compile Include="Data\SqlServer\ErrorEntry.cs" />
     <Compile Include="Data\SqlServer\MockExtensions.cs" />
     <Compile Include="Data\SqlServer\ValidateResult.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

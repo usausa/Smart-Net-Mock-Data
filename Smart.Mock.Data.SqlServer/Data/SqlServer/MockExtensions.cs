@@ -40,17 +40,12 @@
 
             var result = new ValidateResult();
 
+            var index = 0;
             foreach (var executedCommand in command.ExecutedCommands)
             {
-                using (var reader = new StringReader(executedCommand.CommandText))
-                {
-                    IList<ParseError> errors;
-                    parser.Parse(reader, out errors);
-                    if (errors != null)
-                    {
-                        result.AddErrors(errors);
-                    }
-                }
+                ParseError(parser, index, executedCommand.CommandText, result);
+
+                index++;
             }
 
             return result;
@@ -86,23 +81,48 @@
 
             var result = new ValidateResult();
 
+            var index = 0;
             foreach (var command in connection.Commands)
             {
                 foreach (var executedCommand in command.ExecutedCommands)
                 {
-                    using (var reader = new StringReader(executedCommand.CommandText))
-                    {
-                        IList<ParseError> errors;
-                        parser.Parse(reader, out errors);
-                        if (errors != null)
-                        {
-                            result.AddErrors(errors);
-                        }
-                    }
+                    ParseError(parser, index, executedCommand.CommandText, result);
+
+                    index++;
                 }
             }
 
             return result;
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="parser"></param>
+        /// <param name="index"></param>
+        /// <param name="commandText"></param>
+        /// <param name="result"></param>
+        private static void ParseError(TSqlParser parser, int index, string commandText, ValidateResult result)
+        {
+            using (var reader = new StringReader(commandText))
+            {
+                IList<ParseError> errors;
+                parser.Parse(reader, out errors);
+                if (errors != null)
+                {
+                    foreach (var error in errors)
+                    {
+                        result.AddError(new ErrorEntry(
+                            index,
+                            commandText,
+                            error.Number,
+                            error.Offset,
+                            error.Line,
+                            error.Column,
+                            error.Message));
+                    }
+                }
+            }
         }
     }
 }

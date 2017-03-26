@@ -281,8 +281,8 @@
         public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length)
         {
             var bytes = (byte[])rows[current][i];
-            var result = Math.Min(bytes.Length - fieldOffset, length);
-            Array.Copy(bytes, fieldOffset, buffer, length, result);
+            var result = Math.Min(bytes.Length - (int)fieldOffset, length);
+            Array.Copy(bytes, (int)fieldOffset, buffer, length, result);
             return result;
         }
 
@@ -308,8 +308,8 @@
         public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length)
         {
             var chars = (char[])rows[current][i];
-            var result = Math.Min(chars.Length - fieldoffset, length);
-            Array.Copy(chars, fieldoffset, buffer, length, result);
+            var result = Math.Min(chars.Length - (int)fieldoffset, length);
+            Array.Copy(chars, (int)fieldoffset, buffer, length, result);
             return result;
         }
 

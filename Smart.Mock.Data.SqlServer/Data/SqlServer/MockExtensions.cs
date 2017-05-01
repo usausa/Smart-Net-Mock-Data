@@ -44,8 +44,7 @@
             {
                 using (var reader = new StringReader(executedCommand.CommandText))
                 {
-                    IList<ParseError> errors;
-                    parser.Parse(reader, out errors);
+                    parser.Parse(reader, out IList<ParseError> errors);
                     if (errors != null)
                     {
                         result.AddErrors(errors);
@@ -92,8 +91,7 @@
                 {
                     using (var reader = new StringReader(executedCommand.CommandText))
                     {
-                        IList<ParseError> errors;
-                        parser.Parse(reader, out errors);
+                        parser.Parse(reader, out IList<ParseError> errors);
                         if (errors != null)
                         {
                             result.AddErrors(errors);

@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="Dapper" Version="1.50.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="1.1.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.0.0" />
     <PackageReference Include="Microsoft.SqlServer.TransactSql.ScriptDom" Version="14.0.3660.1" />

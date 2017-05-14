@@ -5,6 +5,8 @@
     using System.Globalization;
     using System.Text;
 
+    using Microsoft.SqlServer.TransactSql.ScriptDom;
+
     /// <summary>
     ///
     /// </summary>
@@ -21,20 +23,23 @@
         /// <summary>
         ///
         /// </summary>
-        public IList<ErrorEntry> Errors { get; } = new List<ErrorEntry>();
+        public IList<ParseError> Errors { get; } = new List<ParseError>();
 
         /// <summary>
         ///
         /// </summary>
-        /// <param name="entry"></param>
-        public void AddError(ErrorEntry entry)
+        /// <param name="errors"></param>
+        public void AddErrors(IList<ParseError> errors)
         {
-            if (entry == null)
+            if (errors == null)
             {
-                throw new ArgumentNullException(nameof(entry));
+                throw new ArgumentNullException(nameof(errors));
             }
 
-            Errors.Add(entry);
+            foreach (var error in errors)
+            {
+                Errors.Add(error);
+            }
         }
 
         /// <summary>
@@ -48,7 +53,7 @@
             {
                 sb.AppendFormat(
                     CultureInfo.InvariantCulture,
-                    "Error [{0}] (Line = {1}, Column = {2}) '{3}'\r\n",
+                    "Error [{0}] (Line = {1}, Column = {2}) : '{3}'\r\n",
                     error.Number,
                     error.Line,
                     error.Column,

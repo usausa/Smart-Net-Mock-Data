@@ -20,11 +20,6 @@
         /// <param name="command"></param>
         public MockDbParameterCollection(MockDbCommand command)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-
             Command = command;
         }
 

@@ -1,6 +1,5 @@
 ﻿namespace Smart.Mock.Data
 {
-    using System;
     using System.Data;
 
     /// <summary>
@@ -29,11 +28,6 @@
         /// <param name="connection"></param>
         public MockDbTransaction(IDbConnection connection)
         {
-            if (connection == null)
-            {
-                throw new ArgumentNullException(nameof(connection));
-            }
-
             Connection = connection;
         }
 
@@ -44,11 +38,6 @@
         /// <param name="isolationLevel"></param>
         public MockDbTransaction(IDbConnection connection, IsolationLevel isolationLevel)
         {
-            if (connection == null)
-            {
-                throw new ArgumentNullException(nameof(connection));
-            }
-
             Connection = connection;
             IsolationLevel = isolationLevel;
         }

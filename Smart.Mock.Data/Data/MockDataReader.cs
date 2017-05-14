@@ -87,11 +87,6 @@
         {
             get
             {
-                if ((i < 0) || (i >= columns.Length))
-                {
-                    throw new ArgumentOutOfRangeException(nameof(i));
-                }
-
                 return rows[current][i];
             }
         }
@@ -171,11 +166,6 @@
         /// <returns></returns>
         public bool IsDBNull(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return rows[current][i] is DBNull || rows[current][i] == null;
         }
 
@@ -186,11 +176,6 @@
         /// <returns></returns>
         public string GetName(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return columns[i].Name;
         }
 
@@ -201,11 +186,6 @@
         /// <returns></returns>
         public string GetDataTypeName(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return columns[i].DataType.Name;
         }
 
@@ -216,11 +196,6 @@
         /// <returns></returns>
         public Type GetFieldType(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return columns[i].DataType;
         }
 
@@ -250,11 +225,6 @@
         /// <returns></returns>
         public object GetValue(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return rows[current][i];
         }
 
@@ -296,11 +266,6 @@
         /// <returns></returns>
         public byte GetByte(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return Convert.ToByte(rows[current][i], CultureInfo.InvariantCulture);
         }
 
@@ -315,19 +280,9 @@
         /// <returns></returns>
         public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
-
             var bytes = (byte[])rows[current][i];
-            var result = Math.Min(bytes.Length - fieldOffset, length);
-            Array.Copy(bytes, fieldOffset, buffer, length, result);
+            var result = Math.Min(bytes.Length - (int)fieldOffset, length);
+            Array.Copy(bytes, (int)fieldOffset, buffer, length, result);
             return result;
         }
 
@@ -338,11 +293,6 @@
         /// <returns></returns>
         public char GetChar(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return Convert.ToChar(rows[current][i], CultureInfo.InvariantCulture);
         }
 
@@ -357,19 +307,9 @@
         /// <returns></returns>
         public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
-            if (buffer == null)
-            {
-                throw new ArgumentNullException(nameof(buffer));
-            }
-
             var chars = (char[])rows[current][i];
-            var result = Math.Min(chars.Length - fieldoffset, length);
-            Array.Copy(chars, fieldoffset, buffer, length, result);
+            var result = Math.Min(chars.Length - (int)fieldoffset, length);
+            Array.Copy(chars, (int)fieldoffset, buffer, length, result);
             return result;
         }
 
@@ -380,11 +320,6 @@
         /// <returns></returns>
         public Guid GetGuid(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             if (rows[current][i] is Guid)
             {
                 return (Guid)rows[current][i];
@@ -400,11 +335,6 @@
         /// <returns></returns>
         public short GetInt16(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return Convert.ToInt16(rows[current][i], CultureInfo.InvariantCulture);
         }
 
@@ -415,11 +345,6 @@
         /// <returns></returns>
         public int GetInt32(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return Convert.ToInt32(rows[current][i], CultureInfo.InvariantCulture);
         }
 
@@ -430,11 +355,6 @@
         /// <returns></returns>
         public long GetInt64(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return Convert.ToInt64(rows[current][i], CultureInfo.InvariantCulture);
         }
 
@@ -445,11 +365,6 @@
         /// <returns></returns>
         public float GetFloat(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return Convert.ToSingle(rows[current][i], CultureInfo.InvariantCulture);
         }
 
@@ -460,11 +375,6 @@
         /// <returns></returns>
         public double GetDouble(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return Convert.ToDouble(rows[current][i], CultureInfo.InvariantCulture);
         }
 
@@ -475,11 +385,6 @@
         /// <returns></returns>
         public string GetString(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return Convert.ToString(rows[current][i], CultureInfo.InvariantCulture);
         }
 
@@ -490,11 +395,6 @@
         /// <returns></returns>
         public decimal GetDecimal(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return Convert.ToDecimal(rows[current][i], CultureInfo.InvariantCulture);
         }
 
@@ -505,11 +405,6 @@
         /// <returns></returns>
         public DateTime GetDateTime(int i)
         {
-            if ((i < 0) || (i >= columns.Length))
-            {
-                throw new ArgumentOutOfRangeException(nameof(i));
-            }
-
             return Convert.ToDateTime(rows[current][i], CultureInfo.InvariantCulture);
         }
 

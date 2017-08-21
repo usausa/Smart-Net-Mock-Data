@@ -2,16 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>net47</TargetFramework>
+    <LangVersion>latest</LangVersion>
     <RootNamespace>Smart.Mock</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
     <CodeAnalysisRuleSet>..\Smart.Mock.Data.ruleset</CodeAnalysisRuleSet>
     <Version>1.1.0</Version>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

@@ -4,9 +4,6 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <RootNamespace>Smart.Mock</RootNamespace>
-  </PropertyGroup>
-
-  <PropertyGroup>
     <CodeAnalysisRuleSet>..\Smart.Mock.Data.ruleset</CodeAnalysisRuleSet>
     <Version>1.2.1</Version>
   </PropertyGroup>

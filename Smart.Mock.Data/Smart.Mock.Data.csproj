@@ -5,7 +5,7 @@
     <LangVersion>latest</LangVersion>
     <RootNamespace>Smart.Mock</RootNamespace>
     <CodeAnalysisRuleSet>..\Smart.Mock.Data.ruleset</CodeAnalysisRuleSet>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

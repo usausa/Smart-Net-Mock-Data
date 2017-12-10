@@ -5,18 +5,18 @@
     <LangVersion>latest</LangVersion>
     <RootNamespace>Smart.Mock</RootNamespace>
     <CodeAnalysisRuleSet>..\Smart.Mock.Data.ruleset</CodeAnalysisRuleSet>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="1.50.2" />
+    <PackageReference Include="Dapper" Version="1.50.4" />
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="1.1.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="Microsoft.SqlServer.TransactSql.ScriptDom" Version="14.0.3660.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
+    <PackageReference Include="Microsoft.SqlServer.TransactSql.ScriptDom" Version="14.0.3811.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
-    <PackageReference Include="xunit" Version="2.2.0" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.2.0" />
+    <PackageReference Include="xunit" Version="2.3.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
 
   <ItemGroup>

@@ -19,8 +19,7 @@
     <tags>smart ado.net mock sqlserver</tags>
   </metadata>
   <files>
-    <file src="Smart.Mock.Data.SqlServer\bin\Release\net47\Smart.Mock.Data.SqlServer.dll" target="lib\net47" />
-    <!--<file src="Smart.Mock.Data.SqlServer\bin\Release\net47\Smart.Mock.Data.SqlServer.pdb" target="lib\net47" />-->
-    <!--<file src="Smart.Mock.Data.SqlServer\bin\Release\net47\Smart.Mock.Data.SqlServer.xml" target="lib\net47" />-->
+    <!-- net462 -->
+    <file src="Smart.Mock.Data.SqlServer\bin\Release\net462\Smart.Mock.Data.SqlServer.dll" target="lib\net462" />
   </files>
 </package>

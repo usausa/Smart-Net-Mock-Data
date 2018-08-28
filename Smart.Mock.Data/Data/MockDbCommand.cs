@@ -11,12 +11,12 @@
         /// <summary>
         ///
         /// </summary>
-        public string CommandText { get; private set; }
+        public string CommandText { get; }
 
         /// <summary>
         ///
         /// </summary>
-        public IList<MockDbParameter> Parameters { get; private set; }
+        public IList<MockDbParameter> Parameters { get; }
 
         /// <summary>
         ///
@@ -44,10 +44,7 @@
         /// <summary>
         ///
         /// </summary>
-        public IList<ExecutedCommand> ExecutedCommands
-        {
-            get { return executedCommands; }
-        }
+        public IList<ExecutedCommand> ExecutedCommands => executedCommands;
 
         /// <summary>
         ///
@@ -77,10 +74,7 @@
         /// <summary>
         ///
         /// </summary>
-        public IDataParameterCollection Parameters
-        {
-            get { return parameters; }
-        }
+        public IDataParameterCollection Parameters => parameters;
 
         /// <summary>
         ///

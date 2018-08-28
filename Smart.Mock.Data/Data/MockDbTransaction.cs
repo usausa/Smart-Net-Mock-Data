@@ -58,7 +58,7 @@
         /// </summary>
         public void Commit()
         {
-            TransactionStatus = TransactionStatus.Commited;
+            TransactionStatus = TransactionStatus.Committed;
         }
 
         /// <summary>

@@ -16,18 +16,12 @@
         /// <summary>
         ///
         /// </summary>
-        public IList<MockDbCommand> Commands
-        {
-            get { return commands; }
-        }
+        public IList<MockDbCommand> Commands => commands;
 
         /// <summary>
         ///
         /// </summary>
-        public IList<MockDbTransaction> Transactions
-        {
-            get { return transactions; }
-        }
+        public IList<MockDbTransaction> Transactions => transactions;
 
         /// <summary>
         ///

@@ -33,7 +33,7 @@
             {
                 connection.SetupCommand(cmd => cmd.SetupResult(0));
 
-                connection.Execute("UPDA TE Employee SET Name = @Name WHERE Id = @Id", new { Id = 1, Name = "Employee1" });
+                connection.Execute("UPDATE Employee SET Name = @Name WHERE Id = @Id", new { Id = 1, Name = "Employee1" });
 
                 var result = connection.ValidateSql();
                 Assert.False(result.Valid, result.ToString());

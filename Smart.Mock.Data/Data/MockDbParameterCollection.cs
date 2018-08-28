@@ -12,7 +12,7 @@
         /// <summary>
         ///
         /// </summary>
-        public MockDbCommand Command { get; private set; }
+        public MockDbCommand Command { get; }
 
         /// <summary>
         ///

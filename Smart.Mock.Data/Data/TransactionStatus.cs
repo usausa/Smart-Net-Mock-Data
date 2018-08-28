@@ -13,7 +13,7 @@
         /// <summary>
         ///
         /// </summary>
-        Commited,
+        Committed,
 
         /// <summary>
         ///

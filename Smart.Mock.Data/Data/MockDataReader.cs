@@ -46,10 +46,7 @@
         /// <summary>
         ///
         /// </summary>
-        public int Depth
-        {
-            get { return 0; }
-        }
+        public int Depth => 0;
 
         /// <summary>
         ///
@@ -59,50 +56,26 @@
         /// <summary>
         ///
         /// </summary>
-        public int RecordsAffected
-        {
-            get
-            {
-                return rows.Count;
-            }
-        }
+        public int RecordsAffected => rows.Count;
 
         /// <summary>
         ///
         /// </summary>
-        public int FieldCount
-        {
-            get
-            {
-                return columns.Length;
-            }
-        }
+        public int FieldCount => columns.Length;
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        object IDataRecord.this[int i]
-        {
-            get
-            {
-                return rows[current][i];
-            }
-        }
+        object IDataRecord.this[int i] => rows[current][i];
 
         /// <summary>
         ///
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        object IDataRecord.this[string name]
-        {
-            get
-            {
-                return rows[current][GetOrdinal(name)];
-            }
-        }
+        object IDataRecord.this[string name] => rows[current][GetOrdinal(name)];
 
         /// <summary>
         ///
@@ -275,10 +248,10 @@
         /// <param name="i"></param>
         /// <param name="fieldOffset"></param>
         /// <param name="buffer"></param>
-        /// <param name="bufferoffset"></param>
+        /// <param name="bufferOffset"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferoffset, int length)
+        public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferOffset, int length)
         {
             var bytes = (byte[])rows[current][i];
             var result = Math.Min(bytes.Length - (int)fieldOffset, length);
@@ -300,16 +273,16 @@
         ///
         /// </summary>
         /// <param name="i"></param>
-        /// <param name="fieldoffset"></param>
+        /// <param name="fieldOffset"></param>
         /// <param name="buffer"></param>
-        /// <param name="bufferoffset"></param>
+        /// <param name="bufferOffset"></param>
         /// <param name="length"></param>
         /// <returns></returns>
-        public long GetChars(int i, long fieldoffset, char[] buffer, int bufferoffset, int length)
+        public long GetChars(int i, long fieldOffset, char[] buffer, int bufferOffset, int length)
         {
             var chars = (char[])rows[current][i];
-            var result = Math.Min(chars.Length - (int)fieldoffset, length);
-            Array.Copy(chars, (int)fieldoffset, buffer, length, result);
+            var result = Math.Min(chars.Length - (int)fieldOffset, length);
+            Array.Copy(chars, (int)fieldOffset, buffer, length, result);
             return result;
         }
 

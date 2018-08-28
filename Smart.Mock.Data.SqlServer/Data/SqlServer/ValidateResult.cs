@@ -15,10 +15,7 @@
         /// <summary>
         ///
         /// </summary>
-        public bool Valid
-        {
-            get { return Errors.Count == 0; }
-        }
+        public bool Valid => Errors.Count == 0;
 
         /// <summary>
         ///

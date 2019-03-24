@@ -3,14 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26228.9
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Mock.Data", "Smart.Mock.Data\Smart.Mock.Data.csproj", "{16861E8A-6457-4C74-A731-4B33BB4C5B49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Mock.Data", "Smart.Mock.Data\Smart.Mock.Data.csproj", "{16861E8A-6457-4C74-A731-4B33BB4C5B49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Mock.Data.SqlServer", "Smart.Mock.Data.SqlServer\Smart.Mock.Data.SqlServer.csproj", "{5FB45074-CDF6-4662-8AB3-9B5377A61B52}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Mock.Data.SqlServer", "Smart.Mock.Data.SqlServer\Smart.Mock.Data.SqlServer.csproj", "{5FB45074-CDF6-4662-8AB3-9B5377A61B52}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{FB207DA8-98C2-4B82-B4B5-BC528FE7039D}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		Directory.Build.props = Directory.Build.props
+		Directory.Build.targets = Directory.Build.targets
 		README.md = README.md
 		Smart.Mock.Data.nuspec = Smart.Mock.Data.nuspec
 		Smart.Mock.Data.ruleset = Smart.Mock.Data.ruleset
@@ -41,5 +44,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {E1C817BE-6CE6-4A62-A909-034F75B177E1}
 	EndGlobalSection
 EndGlobal

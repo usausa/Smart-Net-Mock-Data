@@ -1,5 +1,6 @@
 ﻿namespace Smart.Mock.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Data;
 
@@ -45,6 +46,11 @@
         ///
         /// </summary>
         public IList<ExecutedCommand> ExecutedCommands => executedCommands;
+
+        /// <summary>
+        ///
+        /// </summary>
+        public Action<ExecutedCommand> Executing { get; set; }
 
         /// <summary>
         ///
@@ -125,7 +131,9 @@
         /// <returns></returns>
         public int ExecuteNonQuery()
         {
-            executedCommands.Add(new ExecutedCommand(CommandText, parameters));
+            var command = new ExecutedCommand(CommandText, parameters);
+            executedCommands.Add(command);
+            Executing?.Invoke(command);
             return (int)setupedResults.Dequeue();
         }
 
@@ -135,7 +143,9 @@
         /// <returns></returns>
         public IDataReader ExecuteReader()
         {
-            executedCommands.Add(new ExecutedCommand(CommandText, parameters));
+            var command = new ExecutedCommand(CommandText, parameters);
+            executedCommands.Add(command);
+            Executing?.Invoke(command);
             return (IDataReader)setupedResults.Dequeue();
         }
 
@@ -146,7 +156,9 @@
         /// <returns></returns>
         public IDataReader ExecuteReader(CommandBehavior behavior)
         {
-            executedCommands.Add(new ExecutedCommand(CommandText, parameters));
+            var command = new ExecutedCommand(CommandText, parameters);
+            executedCommands.Add(command);
+            Executing?.Invoke(command);
             return (IDataReader)setupedResults.Dequeue();
         }
 
@@ -156,7 +168,9 @@
         /// <returns></returns>
         public object ExecuteScalar()
         {
-            executedCommands.Add(new ExecutedCommand(CommandText, parameters));
+            var command = new ExecutedCommand(CommandText, parameters);
+            executedCommands.Add(command);
+            Executing?.Invoke(command);
             return setupedResults.Dequeue();
         }
 

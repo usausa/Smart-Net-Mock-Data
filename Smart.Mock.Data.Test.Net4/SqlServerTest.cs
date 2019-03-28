@@ -1,4 +1,4 @@
-﻿namespace Smart.Mock
+namespace Smart.Mock
 {
     using Dapper;
 
@@ -8,7 +8,7 @@
     using Xunit;
 
     /// <summary>
-    /// SqlServerTest の概要の説明
+    ///
     /// </summary>
     public class SqlServerTest
     {
@@ -33,7 +33,7 @@
             {
                 connection.SetupCommand(cmd => cmd.SetupResult(0));
 
-                connection.Execute("UPDATE Employee SET Name = @Name WHERE Id = @Id", new { Id = 1, Name = "Employee1" });
+                connection.Execute("UPDATE Employee Name = @Name WHERE Id = @Id", new { Id = 1, Name = "Employee1" });
 
                 var result = connection.ValidateSql();
                 Assert.False(result.Valid, result.ToString());

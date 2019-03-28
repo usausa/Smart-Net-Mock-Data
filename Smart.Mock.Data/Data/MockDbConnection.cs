@@ -1,133 +1,71 @@
-﻿namespace Smart.Mock.Data
+namespace Smart.Mock.Data
 {
     using System;
     using System.Collections.Generic;
     using System.Data;
+    using System.Data.Common;
 
-    /// <summary>
-    ///
-    /// </summary>
-    public sealed class MockDbConnection : IDbConnection
+    public sealed class MockDbConnection : DbConnection
     {
         private readonly Queue<MockDbCommand> setupedCommands = new Queue<MockDbCommand>();
         private readonly List<MockDbCommand> commands = new List<MockDbCommand>();
         private readonly List<MockDbTransaction> transactions = new List<MockDbTransaction>();
 
-        /// <summary>
-        ///
-        /// </summary>
+        private string database;
+
+        private ConnectionState state;
+
         public IList<MockDbCommand> Commands => commands;
 
-        /// <summary>
-        ///
-        /// </summary>
         public IList<MockDbTransaction> Transactions => transactions;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public string ConnectionString { get; set; }
+        public override string ConnectionString { get; set; }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public int ConnectionTimeout { get; set; }
+        public override string Database => database;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public string Database { get; private set; }
+        public override string DataSource => string.Empty;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public ConnectionState State { get; private set; }
+        public override string ServerVersion => string.Empty;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public void Dispose()
+        public override ConnectionState State => state;
+
+        public override void Open()
         {
-            Close();
+            state = ConnectionState.Open;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public void Open()
+        public override void Close()
         {
-            State = ConnectionState.Open;
+            state = ConnectionState.Closed;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public void Close()
+        public override void ChangeDatabase(string databaseName)
         {
-            State = ConnectionState.Closed;
+            database = databaseName;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="databaseName"></param>
-        public void ChangeDatabase(string databaseName)
+        protected override DbTransaction BeginDbTransaction(IsolationLevel isolationLevel)
         {
-            Database = databaseName;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public IDbTransaction BeginTransaction()
-        {
-            var tx = new MockDbTransaction(this);
+            var tx = new MockDbTransaction(this, isolationLevel);
             transactions.Add(tx);
             return tx;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="il"></param>
-        /// <returns></returns>
-        public IDbTransaction BeginTransaction(IsolationLevel il)
-        {
-            var tx = new MockDbTransaction(this, il);
-            transactions.Add(tx);
-            return tx;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Factory")]
-        public IDbCommand CreateCommand()
+        protected override DbCommand CreateDbCommand()
         {
             var command = setupedCommands.Count > 0 ? setupedCommands.Dequeue() : new MockDbCommand { Connection = this };
             commands.Add(command);
             return command;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="command"></param>
         public void SetupCommand(MockDbCommand command)
         {
             setupedCommands.Enqueue(command);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="action"></param>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Factory")]
         public void SetupCommand(Action<MockDbCommand> action)
         {
-            if (action == null)
+            if (action is null)
             {
                 throw new ArgumentNullException(nameof(action));
             }

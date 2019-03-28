@@ -1,4 +1,4 @@
-﻿namespace Smart.Mock.Data.SqlServer
+namespace Smart.Mock.Data.SqlServer
 {
     using System;
     using System.Collections.Generic;
@@ -28,12 +28,12 @@
         /// <returns></returns>
         public static ValidateResult ValidateSql(this MockDbCommand command, TSqlParser parser)
         {
-            if (command == null)
+            if (command is null)
             {
                 throw new ArgumentNullException(nameof(command));
             }
 
-            if (parser == null)
+            if (parser is null)
             {
                 throw new ArgumentNullException(nameof(parser));
             }
@@ -73,12 +73,12 @@
         /// <returns></returns>
         public static ValidateResult ValidateSql(this MockDbConnection connection, TSqlParser parser)
         {
-            if (connection == null)
+            if (connection is null)
             {
                 throw new ArgumentNullException(nameof(connection));
             }
 
-            if (parser == null)
+            if (parser is null)
             {
                 throw new ArgumentNullException(nameof(parser));
             }

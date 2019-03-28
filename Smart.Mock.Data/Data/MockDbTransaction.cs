@@ -1,70 +1,41 @@
-﻿namespace Smart.Mock.Data
+namespace Smart.Mock.Data
 {
     using System.Data;
+    using System.Data.Common;
 
-    /// <summary>
-    ///
-    /// </summary>
-    public sealed class MockDbTransaction : IDbTransaction
+    public sealed class MockDbTransaction : DbTransaction
     {
-        /// <summary>
-        ///
-        /// </summary>
-        public TransactionStatus TransactionStatus { get; private set; }
+        public TransactionStatus TransactionStatus { get; private set; } = TransactionStatus.Unknown;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public IDbConnection Connection { get; }
+        protected override DbConnection DbConnection { get; }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public IsolationLevel IsolationLevel { get; }
+        public override IsolationLevel IsolationLevel { get; }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="connection"></param>
-        public MockDbTransaction(IDbConnection connection)
+        public MockDbTransaction(DbConnection connection, IsolationLevel isolationLevel)
         {
-            Connection = connection;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="connection"></param>
-        /// <param name="isolationLevel"></param>
-        public MockDbTransaction(IDbConnection connection, IsolationLevel isolationLevel)
-        {
-            Connection = connection;
+            DbConnection = connection;
             IsolationLevel = isolationLevel;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public void Dispose()
+        protected override void Dispose(bool disposing)
         {
-            if (TransactionStatus == TransactionStatus.Unknown)
+            if (disposing)
             {
-                TransactionStatus = TransactionStatus.RollBacked;
+                if (TransactionStatus == TransactionStatus.Unknown)
+                {
+                    TransactionStatus = TransactionStatus.RollBacked;
+                }
             }
+
+            base.Dispose(disposing);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public void Commit()
+        public override void Commit()
         {
             TransactionStatus = TransactionStatus.Committed;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public void Rollback()
+        public override void Rollback()
         {
             TransactionStatus = TransactionStatus.RollBacked;
         }

@@ -1,48 +1,52 @@
-﻿namespace Smart.Mock.Data
+namespace Smart.Mock.Data
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-    using System.Data;
+    using System.Data.Common;
+    using System.Linq;
 
-    /// <summary>
-    ///
-    /// </summary>
-    public class MockDbParameterCollection : List<MockDbParameter>, IDataParameterCollection
+    public class MockDbParameterCollection : DbParameterCollection
     {
-        /// <summary>
-        ///
-        /// </summary>
-        public MockDbCommand Command { get; }
+        private readonly List<MockDbParameter> parameters = new List<MockDbParameter>();
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="command"></param>
-        public MockDbParameterCollection(MockDbCommand command)
+        public override object SyncRoot => ((ICollection)parameters).SyncRoot;
+
+        public override int Count => parameters.Count;
+
+        public override IEnumerator GetEnumerator() => parameters.GetEnumerator();
+
+        protected override DbParameter GetParameter(int index) => parameters[index];
+
+        protected override void SetParameter(int index, DbParameter value) => parameters[index] = (MockDbParameter)value;
+
+        protected override void SetParameter(string parameterName, DbParameter value) => parameters[IndexOfChecked(parameterName)] = (MockDbParameter)value;
+
+        protected override DbParameter GetParameter(string parameterName) => parameters[IndexOfChecked(parameterName)];
+
+        public override int Add(object value)
         {
-            Command = command;
+            parameters.Add((MockDbParameter)value);
+            return parameters.Count - 1;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameterName"></param>
-        /// <returns></returns>
-        public bool Contains(string parameterName)
-        {
-            return IndexOf(parameterName) != -1;
-        }
+        public override void AddRange(Array values) => parameters.AddRange(values.Cast<MockDbParameter>());
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameterName"></param>
-        /// <returns></returns>
-        public int IndexOf(string parameterName)
+        public override void Clear() => parameters.Clear();
+
+        public override bool Contains(object value) => parameters.Contains((MockDbParameter)value);
+
+        public override bool Contains(string value) => IndexOf(value) != -1;
+
+        public override void CopyTo(Array array, int index) => parameters.CopyTo((MockDbParameter[])array, index);
+
+        public override int IndexOf(object value) => parameters.IndexOf((MockDbParameter)value);
+
+        public override int IndexOf(string parameterName)
         {
-            for (var i = 0; i < Count; i++)
+            for (var i = 0; i < parameters.Count; i++)
             {
-                if (String.Equals(this[i].ParameterName, parameterName, StringComparison.OrdinalIgnoreCase))
+                if (String.Equals(parameters[i].ParameterName, parameterName, StringComparison.OrdinalIgnoreCase))
                 {
                     return i;
                 }
@@ -51,41 +55,23 @@
             return -1;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameterName"></param>
-        public void RemoveAt(string parameterName)
+        public override void Insert(int index, object value) => parameters.Insert(index, (MockDbParameter)value);
+
+        public override void Remove(object value) => parameters.Remove((MockDbParameter)value);
+
+        public override void RemoveAt(int index) => parameters.RemoveAt(index);
+
+        public override void RemoveAt(string parameterName) => parameters.RemoveAt(IndexOfChecked(parameterName));
+
+        private int IndexOfChecked(string parameterName)
         {
             var index = IndexOf(parameterName);
-            if (index != -1)
+            if (index == -1)
             {
-                RemoveAt(index);
+                throw new IndexOutOfRangeException($"Parameter {parameterName} not found.");
             }
-        }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="parameterName"></param>
-        /// <returns></returns>
-        public object this[string parameterName]
-        {
-            get
-            {
-                var index = IndexOf(parameterName);
-                return index != -1 ? this[index] : null;
-            }
-            set
-            {
-                var index = IndexOf(parameterName);
-                if (index == -1)
-                {
-                    throw new ArgumentOutOfRangeException(nameof(parameterName));
-                }
-
-                this[index] = (MockDbParameter)value;
-            }
+            return index;
         }
     }
 }

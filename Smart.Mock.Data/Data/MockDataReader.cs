@@ -1,30 +1,17 @@
-﻿namespace Smart.Mock.Data
+namespace Smart.Mock.Data
 {
     using System;
+    using System.Collections;
     using System.Collections.Generic;
-    using System.Data;
+    using System.Data.Common;
     using System.Globalization;
 
-    /// <summary>
-    ///
-    /// </summary>
     public class MockColumn
     {
-        /// <summary>
-        ///
-        /// </summary>
         public Type DataType { get; }
 
-        /// <summary>
-        ///
-        /// </summary>
         public string Name { get; }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="dataType"></param>
-        /// <param name="name"></param>
         public MockColumn(Type dataType, string name)
         {
             DataType = dataType;
@@ -32,153 +19,62 @@
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
-    public sealed class MockDataReader : IDataReader
+    public sealed class MockDataReader : DbDataReader
     {
         private readonly MockColumn[] columns;
 
         private readonly IList<object[]> rows;
 
+        private bool closed;
+
         private int current = -1;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public int Depth => 0;
+        public override bool IsClosed => closed;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public bool IsClosed { get; private set; }
+        public override int Depth => 0;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public int RecordsAffected => rows.Count;
+        public override int FieldCount => columns.Length;
 
-        /// <summary>
-        ///
-        /// </summary>
-        public int FieldCount => columns.Length;
+        public override int RecordsAffected => rows.Count;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        object IDataRecord.this[int i] => rows[current][i];
+        public override bool HasRows => rows.Count > 0;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        object IDataRecord.this[string name] => rows[current][GetOrdinal(name)];
+        public override object this[int ordinal] => rows[current][ordinal];
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="columns"></param>
-        /// <param name="rows"></param>
+        public override object this[string name] => rows[current][GetOrdinal(name)];
+
         public MockDataReader(MockColumn[] columns, IList<object[]> rows)
         {
             this.columns = columns;
             this.rows = rows;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public void Dispose()
+        public override void Close()
         {
-            Close();
+            closed = true;
+            base.Close();
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        public void Close()
-        {
-            IsClosed = true;
-        }
+        public override IEnumerator GetEnumerator() => new DbEnumerator(this, false);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public DataTable GetSchemaTable()
-        {
-            throw new NotSupportedException("Not supported.");
-        }
+        public override bool NextResult() => current < rows.Count;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public bool NextResult()
-        {
-            return current < rows.Count;
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <returns></returns>
-        public bool Read()
+        public override bool Read()
         {
             current++;
             return current < rows.Count;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public bool IsDBNull(int i)
-        {
-            return rows[current][i] is DBNull || rows[current][i] == null;
-        }
+        public override bool IsDBNull(int ordinal) =>
+            rows[current][ordinal] is DBNull || rows[current][ordinal] is null;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public string GetName(int i)
-        {
-            return columns[i].Name;
-        }
+        public override string GetDataTypeName(int ordinal) => columns[ordinal].DataType.Name;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public string GetDataTypeName(int i)
-        {
-            return columns[i].DataType.Name;
-        }
+        public override Type GetFieldType(int ordinal) => columns[ordinal].DataType;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public Type GetFieldType(int i)
-        {
-            return columns[i].DataType;
-        }
+        public override string GetName(int ordinal) => columns[ordinal].Name;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes", Justification = "Ignore")]
-        public int GetOrdinal(string name)
+        public override int GetOrdinal(string name)
         {
             for (var i = 0; i < columns.Length; i++)
             {
@@ -191,204 +87,77 @@
             throw new IndexOutOfRangeException("Column is not found.");
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public object GetValue(int i)
+        public override object GetValue(int ordinal) =>
+            IsDBNull(ordinal) ? DBNull.Value : rows[current][ordinal];
+
+        public override int GetValues(object[] values)
         {
-            return rows[current][i];
+            var length = Math.Min(values.Length, columns.Length);
+            for (var i = 0; i < length; i++)
+            {
+                values[i] = IsDBNull(i) ? DBNull.Value : rows[current][i];
+            }
+
+            return length;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="values"></param>
-        /// <returns></returns>
-        public int GetValues(object[] values)
+        public override bool GetBoolean(int ordinal) =>
+            Convert.ToBoolean(rows[current][ordinal], CultureInfo.InvariantCulture);
+
+        public override byte GetByte(int ordinal) =>
+            Convert.ToByte(rows[current][ordinal], CultureInfo.InvariantCulture);
+
+        public override long GetBytes(int ordinal, long dataOffset, byte[] buffer, int bufferOffset, int length)
         {
-            if (values == null)
-            {
-                throw new ArgumentNullException(nameof(values));
-            }
-
-            var result = Math.Min(values.Length, columns.Length);
-            for (var i = 0; i < result; i++)
-            {
-                values[i] = rows[current][i];
-            }
-
+            var bytes = (byte[])rows[current][ordinal];
+            var result = Math.Min(bytes.Length - (int)dataOffset, length);
+            Buffer.BlockCopy(bytes, (int)dataOffset, buffer, bufferOffset, result);
             return result;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public bool GetBoolean(int i)
-        {
-            return Convert.ToBoolean(rows[current][i], CultureInfo.InvariantCulture);
-        }
+        public override char GetChar(int ordinal) =>
+            Convert.ToChar(rows[current][ordinal], CultureInfo.InvariantCulture);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public byte GetByte(int i)
+        public override long GetChars(int ordinal, long dataOffset, char[] buffer, int bufferOffset, int length)
         {
-            return Convert.ToByte(rows[current][i], CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <param name="fieldOffset"></param>
-        /// <param name="buffer"></param>
-        /// <param name="bufferOffset"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        public long GetBytes(int i, long fieldOffset, byte[] buffer, int bufferOffset, int length)
-        {
-            var bytes = (byte[])rows[current][i];
-            var result = Math.Min(bytes.Length - (int)fieldOffset, length);
-            Array.Copy(bytes, (int)fieldOffset, buffer, length, result);
+            var chars = (char[])rows[current][ordinal];
+            var result = Math.Min(chars.Length - (int)dataOffset, length);
+            Array.Copy(chars, (int)dataOffset, buffer, bufferOffset, result);
             return result;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public char GetChar(int i)
-        {
-            return Convert.ToChar(rows[current][i], CultureInfo.InvariantCulture);
-        }
+        public override DateTime GetDateTime(int ordinal) =>
+            Convert.ToDateTime(rows[current][ordinal], CultureInfo.InvariantCulture);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <param name="fieldOffset"></param>
-        /// <param name="buffer"></param>
-        /// <param name="bufferOffset"></param>
-        /// <param name="length"></param>
-        /// <returns></returns>
-        public long GetChars(int i, long fieldOffset, char[] buffer, int bufferOffset, int length)
-        {
-            var chars = (char[])rows[current][i];
-            var result = Math.Min(chars.Length - (int)fieldOffset, length);
-            Array.Copy(chars, (int)fieldOffset, buffer, length, result);
-            return result;
-        }
+        public override decimal GetDecimal(int ordinal) =>
+            Convert.ToDecimal(rows[current][ordinal], CultureInfo.InvariantCulture);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public Guid GetGuid(int i)
+        public override double GetDouble(int ordinal) =>
+            Convert.ToDouble(rows[current][ordinal], CultureInfo.InvariantCulture);
+
+        public override float GetFloat(int ordinal) =>
+            Convert.ToSingle(rows[current][ordinal], CultureInfo.InvariantCulture);
+
+        public override Guid GetGuid(int ordinal)
         {
-            if (rows[current][i] is Guid)
+            if (rows[current][ordinal] is Guid)
             {
-                return (Guid)rows[current][i];
+                return (Guid)rows[current][ordinal];
             }
 
-            return Guid.Parse(GetString(i));
+            return Guid.Parse(GetString(ordinal));
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public short GetInt16(int i)
-        {
-            return Convert.ToInt16(rows[current][i], CultureInfo.InvariantCulture);
-        }
+        public override short GetInt16(int ordinal) =>
+            Convert.ToInt16(rows[current][ordinal], CultureInfo.InvariantCulture);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public int GetInt32(int i)
-        {
-            return Convert.ToInt32(rows[current][i], CultureInfo.InvariantCulture);
-        }
+        public override int GetInt32(int ordinal) =>
+            Convert.ToInt32(rows[current][ordinal], CultureInfo.InvariantCulture);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public long GetInt64(int i)
-        {
-            return Convert.ToInt64(rows[current][i], CultureInfo.InvariantCulture);
-        }
+        public override long GetInt64(int ordinal) =>
+            Convert.ToInt64(rows[current][ordinal], CultureInfo.InvariantCulture);
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public float GetFloat(int i)
-        {
-            return Convert.ToSingle(rows[current][i], CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public double GetDouble(int i)
-        {
-            return Convert.ToDouble(rows[current][i], CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public string GetString(int i)
-        {
-            return Convert.ToString(rows[current][i], CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public decimal GetDecimal(int i)
-        {
-            return Convert.ToDecimal(rows[current][i], CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public DateTime GetDateTime(int i)
-        {
-            return Convert.ToDateTime(rows[current][i], CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="i"></param>
-        /// <returns></returns>
-        public IDataReader GetData(int i)
-        {
-            throw new NotSupportedException("Not supported.");
-        }
+        public override string GetString(int ordinal) =>
+            Convert.ToString(rows[current][ordinal], CultureInfo.InvariantCulture);
     }
 }

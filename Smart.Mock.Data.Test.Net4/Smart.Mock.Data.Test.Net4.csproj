@@ -1,17 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>    
-    <TargetFramework>net47</TargetFramework>    
+  <PropertyGroup>
+    <TargetFramework>net462</TargetFramework>
     <RootNamespace>Smart.Mock</RootNamespace>
     <CodeAnalysisRuleSet>..\Smart.Mock.Data.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Dapper" Version="1.60.6" />
+  <ItemGroup Condition="'$(Configuration)' == 'Release'">
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.9.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="1.60.6" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
     <PackageReference Include="Microsoft.SqlServer.TransactSql.ScriptDom" Version="15.0.4200.1" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.0.2" />

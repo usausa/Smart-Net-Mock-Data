@@ -20,7 +20,7 @@ namespace Smart.Mock
             {
                 con.SetupCommand(cmd => cmd.SetupResult(1));
 
-                var value = await con.ExecuteAsync("UPDATE Test SET NAME = 'UsaUsa' WHERE Id = 1234");
+                var value = await con.ExecuteAsync("UPDATE Test SET NAME = 'UsaUsa' WHERE Id = 1234").ConfigureAwait(false);
 
                 Assert.Equal(1, value);
             }
@@ -33,7 +33,7 @@ namespace Smart.Mock
             {
                 con.SetupCommand(cmd => cmd.SetupResult(1));
 
-                var value = await con.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Test");
+                var value = await con.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Test").ConfigureAwait(false);
 
                 Assert.Equal(1, value);
             }
@@ -57,7 +57,7 @@ namespace Smart.Mock
                 };
                 con.SetupCommand(cmd => cmd.SetupResult(new MockDataReader(columns, rows)));
 
-                var list = (await con.QueryAsync<Employee>("SELECT COUNT(*) FROM Employee")).ToList();
+                var list = (await con.QueryAsync<Employee>("SELECT COUNT(*) FROM Employee").ConfigureAwait(false)).ToList();
 
                 Assert.Equal(3, list.Count);
             }

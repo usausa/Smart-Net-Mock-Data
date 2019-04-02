@@ -1,7 +1,6 @@
 namespace Smart.Mock.Data.SqlServer
 {
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using Microsoft.SqlServer.TransactSql.ScriptDom;
 
@@ -44,7 +43,7 @@ namespace Smart.Mock.Data.SqlServer
             {
                 using (var reader = new StringReader(executedCommand.CommandText))
                 {
-                    parser.Parse(reader, out IList<ParseError> errors);
+                    parser.Parse(reader, out var errors);
                     if (errors != null)
                     {
                         result.AddErrors(errors);
@@ -91,7 +90,7 @@ namespace Smart.Mock.Data.SqlServer
                 {
                     using (var reader = new StringReader(executedCommand.CommandText))
                     {
-                        parser.Parse(reader, out IList<ParseError> errors);
+                        parser.Parse(reader, out var errors);
                         if (errors != null)
                         {
                             result.AddErrors(errors);

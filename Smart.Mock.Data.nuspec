@@ -10,6 +10,7 @@
     <releaseNotes></releaseNotes>
     <summary>Smart mock data library for .NET</summary>
     <projectUrl>https://github.com/usausa/Smart-Net-Mock-Data</projectUrl>
+    <repository type="git" url="https://github.com/usausa/Smart-Net-Mock-Data" />
     <copyright></copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <dependencies>

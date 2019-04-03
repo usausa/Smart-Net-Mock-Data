@@ -1,4 +1,4 @@
-namespace Smart.Mock.Infrastructure
+﻿namespace Smart.Mock.Infrastructure
 {
     using System;
     using System.Data;

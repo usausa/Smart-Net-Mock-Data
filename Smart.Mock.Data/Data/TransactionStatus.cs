@@ -1,4 +1,4 @@
-namespace Smart.Mock.Data
+﻿namespace Smart.Mock.Data
 {
     public enum TransactionStatus
     {

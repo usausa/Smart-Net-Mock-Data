@@ -1,4 +1,4 @@
-namespace Smart.Mock.Data.SqlServer
+﻿namespace Smart.Mock.Data.SqlServer
 {
     using System;
     using System.Collections.Generic;

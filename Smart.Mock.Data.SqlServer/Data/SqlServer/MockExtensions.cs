@@ -1,30 +1,16 @@
-﻿namespace Smart.Mock.Data.SqlServer
+namespace Smart.Mock.Data.SqlServer
 {
     using System;
     using System.IO;
     using Microsoft.SqlServer.TransactSql.ScriptDom;
 
-    /// <summary>
-    ///
-    /// </summary>
     public static class MockExtensions
     {
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns></returns>
         public static ValidateResult ValidateSql(this MockDbCommand command)
         {
             return ValidateSql(command, DefaultParser.Create());
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="command"></param>
-        /// <param name="parser"></param>
-        /// <returns></returns>
         public static ValidateResult ValidateSql(this MockDbCommand command, TSqlParser parser)
         {
             if (command is null)
@@ -54,22 +40,11 @@
             return result;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="connection"></param>
-        /// <returns></returns>
         public static ValidateResult ValidateSql(this MockDbConnection connection)
         {
             return ValidateSql(connection, DefaultParser.Create());
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="connection"></param>
-        /// <param name="parser"></param>
-        /// <returns></returns>
         public static ValidateResult ValidateSql(this MockDbConnection connection, TSqlParser parser)
         {
             if (connection is null)

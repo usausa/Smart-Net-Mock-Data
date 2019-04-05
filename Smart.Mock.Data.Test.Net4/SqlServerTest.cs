@@ -1,4 +1,4 @@
-﻿namespace Smart.Mock
+namespace Smart.Mock
 {
     using Dapper;
 
@@ -7,9 +7,6 @@
 
     using Xunit;
 
-    /// <summary>
-    ///
-    /// </summary>
     public class SqlServerTest
     {
         [Fact]

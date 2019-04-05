@@ -1,4 +1,4 @@
-﻿namespace Smart.Mock.Services
+namespace Smart.Mock.Services
 {
     using System.Collections.Generic;
 
@@ -8,14 +8,8 @@
 
     using Xunit;
 
-    /// <summary>
-    ///
-    /// </summary>
     public class EmployeeServiceTest
     {
-        /// <summary>
-        ///
-        /// </summary>
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Ignore")]
         [Fact]
         public void QueryEmployeeList()

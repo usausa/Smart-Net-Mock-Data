@@ -1,7 +1,6 @@
 namespace Smart.Mock
 {
-    using Dapper;
-
+    using Smart.Data.Mapper;
     using Smart.Mock.Data;
     using Smart.Mock.Data.SqlServer;
 

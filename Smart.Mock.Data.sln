@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Smart.Mock.Data.SqlServer.nuspec = Smart.Mock.Data.SqlServer.nuspec
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Mock.Data.Test.Net4", "Smart.Mock.Data.Test.Net4\Smart.Mock.Data.Test.Net4.csproj", "{C128DD5E-3188-44C0-9D85-092C1C58F0E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Mock.Data.Tests", "Smart.Mock.Data.Tests\Smart.Mock.Data.Tests.csproj", "{90F3F404-9FCC-44C0-9199-3740A5394EA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +37,10 @@ Global
 		{5FB45074-CDF6-4662-8AB3-9B5377A61B52}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FB45074-CDF6-4662-8AB3-9B5377A61B52}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5FB45074-CDF6-4662-8AB3-9B5377A61B52}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C128DD5E-3188-44C0-9D85-092C1C58F0E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C128DD5E-3188-44C0-9D85-092C1C58F0E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C128DD5E-3188-44C0-9D85-092C1C58F0E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C128DD5E-3188-44C0-9D85-092C1C58F0E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{90F3F404-9FCC-44C0-9199-3740A5394EA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{90F3F404-9FCC-44C0-9199-3740A5394EA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{90F3F404-9FCC-44C0-9199-3740A5394EA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{90F3F404-9FCC-44C0-9199-3740A5394EA7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

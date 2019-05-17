@@ -3,8 +3,7 @@ namespace Smart.Mock.Services
     using System.Collections.Generic;
     using System.Linq;
 
-    using Dapper;
-
+    using Smart.Data.Mapper;
     using Smart.Mock.Infrastructure;
     using Smart.Mock.Models;
 

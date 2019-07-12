@@ -1,4 +1,4 @@
-﻿namespace Smart.Mock.Data
+namespace Smart.Mock.Data
 {
     using System;
     using System.Collections;
@@ -19,7 +19,7 @@
         }
     }
 
-    public sealed class MockDataReader : DbDataReader
+    public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     {
         private readonly MockColumn[] columns;
 
@@ -47,6 +47,12 @@
         {
             this.columns = columns;
             this.rows = rows;
+        }
+
+        public void Reset()
+        {
+            closed = false;
+            current = -1;
         }
 
         public override void Close()

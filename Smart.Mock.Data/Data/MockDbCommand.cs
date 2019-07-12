@@ -1,4 +1,4 @@
-﻿namespace Smart.Mock.Data
+namespace Smart.Mock.Data
 {
     using System;
     using System.Collections.Generic;
@@ -54,10 +54,7 @@
         {
         }
 
-        protected override DbParameter CreateDbParameter()
-        {
-            return new MockDbParameter();
-        }
+        protected override DbParameter CreateDbParameter() => new MockDbParameter();
 
         public override int ExecuteNonQuery()
         {

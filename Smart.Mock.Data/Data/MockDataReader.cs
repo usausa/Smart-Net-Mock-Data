@@ -96,6 +96,7 @@ namespace Smart.Mock.Data
         public override object GetValue(int ordinal) =>
             IsDBNull(ordinal) ? DBNull.Value : rows[current][ordinal];
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
         public override int GetValues(object[] values)
         {
             var length = Math.Min(values.Length, columns.Length);

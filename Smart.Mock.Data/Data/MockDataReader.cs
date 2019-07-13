@@ -5,6 +5,7 @@ namespace Smart.Mock.Data
     using System.Collections.Generic;
     using System.Data.Common;
     using System.Globalization;
+    using System.Linq;
 
     public class MockColumn
     {
@@ -23,7 +24,7 @@ namespace Smart.Mock.Data
     {
         private readonly MockColumn[] columns;
 
-        private readonly IList<object[]> rows;
+        private readonly object[][] rows;
 
         private bool closed;
 
@@ -35,18 +36,18 @@ namespace Smart.Mock.Data
 
         public override int FieldCount => columns.Length;
 
-        public override int RecordsAffected => rows.Count;
+        public override int RecordsAffected => rows.Length;
 
-        public override bool HasRows => rows.Count > 0;
+        public override bool HasRows => rows.Length > 0;
 
         public override object this[int ordinal] => rows[current][ordinal];
 
         public override object this[string name] => rows[current][GetOrdinal(name)];
 
-        public MockDataReader(MockColumn[] columns, IList<object[]> rows)
+        public MockDataReader(MockColumn[] columns, IEnumerable<object[]> rows)
         {
             this.columns = columns;
-            this.rows = rows;
+            this.rows = rows.ToArray();
         }
 
         public void Reset()
@@ -63,12 +64,12 @@ namespace Smart.Mock.Data
 
         public override IEnumerator GetEnumerator() => new DbEnumerator(this, false);
 
-        public override bool NextResult() => current < rows.Count;
+        public override bool NextResult() => current < rows.Length;
 
         public override bool Read()
         {
             current++;
-            return current < rows.Count;
+            return current < rows.Length;
         }
 
         public override bool IsDBNull(int ordinal) =>

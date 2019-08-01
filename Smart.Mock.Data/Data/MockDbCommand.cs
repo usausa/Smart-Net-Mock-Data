@@ -9,11 +9,17 @@ namespace Smart.Mock.Data
     {
         public string CommandText { get; }
 
+        public int CommandTimeout { get; }
+
+        public CommandType CommandType { get; }
+
         public MockDbParameterCollection Parameters { get; }
 
-        public ExecutedCommand(string commandText, MockDbParameterCollection parameters)
+        public ExecutedCommand(string commandText, int commandTimeout, CommandType commandType, MockDbParameterCollection parameters)
         {
             CommandText = commandText;
+            CommandTimeout = commandTimeout;
+            CommandType = commandType;
             Parameters = parameters;
         }
     }
@@ -58,7 +64,7 @@ namespace Smart.Mock.Data
 
         public override int ExecuteNonQuery()
         {
-            var command = new ExecutedCommand(CommandText, parameters);
+            var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
             executedCommands.Add(command);
             Executing?.Invoke(command);
             return (int)setupedResults.Dequeue();
@@ -66,7 +72,7 @@ namespace Smart.Mock.Data
 
         public override object ExecuteScalar()
         {
-            var command = new ExecutedCommand(CommandText, parameters);
+            var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
             executedCommands.Add(command);
             Executing?.Invoke(command);
             return setupedResults.Dequeue();
@@ -74,7 +80,7 @@ namespace Smart.Mock.Data
 
         protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
         {
-            var command = new ExecutedCommand(CommandText, parameters);
+            var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
             executedCommands.Add(command);
             Executing?.Invoke(command);
             return (DbDataReader)setupedResults.Dequeue();

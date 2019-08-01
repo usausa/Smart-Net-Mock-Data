@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
   <metadata>
     <id>Usa.Smart.Mock.Data.SqlServer</id>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
     <title>Smart.Mock.Data.SqlServer .NET</title>
     <authors>machi_pon</authors>
     <owners>machi_pon</owners>
@@ -14,11 +14,11 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <dependencies>
       <group targetFramework="netcoreapp2.2">
-        <dependency id="Usa.Smart.Mock.Data" version="1.6.1" />
+        <dependency id="Usa.Smart.Mock.Data" version="1.6.2" />
         <dependency id="Microsoft.SqlServer.DacFx" version="150.4384.2-preview" />
       </group>
       <group targetFramework="net462">
-        <dependency id="Usa.Smart.Mock.Data" version="1.6.1" />
+        <dependency id="Usa.Smart.Mock.Data" version="1.6.2" />
         <dependency id="Microsoft.SqlServer.DacFx" version="150.4384.2-preview" />
       </group>
     </dependencies>

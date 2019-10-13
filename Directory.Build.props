@@ -2,19 +2,12 @@
 
   <PropertyGroup>
     <LangVersion>latest</LangVersion>
-    <Version>1.6.2</Version>
     <Deterministic>true</Deterministic>
     <RepoRoot>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\'))</RepoRoot>
     <PathMap>$(RepoRoot)=.</PathMap>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <DebugType>full</DebugType>
-    <DebugSymbols>true</DebugSymbols>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
-    <DebugType>pdbonly</DebugType>
+    <NoWarn>$(NoWarn),1573,1591,1712</NoWarn>
+    <MSBuildWarningsAsMessages>SA0001</MSBuildWarningsAsMessages>
+    <Version>1.6.2</Version>
   </PropertyGroup>
 
   <ItemGroup Condition="'$(Configuration)' == 'Release'">

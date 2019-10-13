@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net462;netcoreapp2.2</TargetFrameworks>
@@ -7,7 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.4384.2-preview" />
+    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.4534.2-preview" />
   </ItemGroup>
 
   <ItemGroup>

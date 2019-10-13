@@ -19,7 +19,7 @@ namespace Smart.Mock.Services
         public IList<Employee> QueryEmployeeList()
         {
             return ConnectionFactory.Using(con =>
-                con.Query<Employee>("SELECT * FROM Employee", buffered: false).ToList());
+                con.QueryList<Employee>("SELECT * FROM Employee"));
         }
     }
 }

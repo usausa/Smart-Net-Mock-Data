@@ -1,4 +1,4 @@
-﻿namespace Smart.Mock.Data
+namespace Smart.Mock.Data
 {
     using System;
     using System.Collections.Generic;
@@ -63,6 +63,7 @@
             setupedCommands.Enqueue(command);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Factory")]
         public void SetupCommand(Action<MockDbCommand> action)
         {
             if (action is null)

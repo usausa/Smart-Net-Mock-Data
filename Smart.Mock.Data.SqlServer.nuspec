@@ -13,20 +13,16 @@
     <copyright></copyright>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <dependencies>
-      <group targetFramework="netcoreapp2.2">
-        <dependency id="Usa.Smart.Mock.Data" version="1.6.2" />
-        <dependency id="Microsoft.SqlServer.DacFx" version="150.4534.2-preview" />
-      </group>
-      <group targetFramework="net462">
-        <dependency id="Usa.Smart.Mock.Data" version="1.6.2" />
-        <dependency id="Microsoft.SqlServer.DacFx" version="150.4534.2-preview" />
-      </group>
+      <dependency id="Usa.Smart.Mock.Data" version="1.6.2" />
+      <dependency id="Microsoft.SqlServer.DacFx" version="150.4573.2" />
     </dependencies>
     <tags>smart ado.net mock sqlserver</tags>
   </metadata>
   <files>
-    <!-- netcoreapp2.2 -->
-    <file src="Smart.Mock.Data.SqlServer\bin\Release\netcoreapp2.2\Smart.Mock.Data.SqlServer.dll" target="lib\netcoreapp2.2" />
+    <!-- netstandard2.1 -->
+    <file src="Smart.Mock.Data.SqlServer\bin\Release\netstandard2.1\Smart.Mock.Data.SqlServer.dll" target="lib\netstandard2.1" />
+    <!-- netstandard2.0 -->
+    <file src="Smart.Mock.Data.SqlServer\bin\Release\netstandard2.0\Smart.Mock.Data.SqlServer.dll" target="lib\netstandard2.0" />
     <!-- net462 -->
     <file src="Smart.Mock.Data.SqlServer\bin\Release\net462\Smart.Mock.Data.SqlServer.dll" target="lib\net462" />
   </files>

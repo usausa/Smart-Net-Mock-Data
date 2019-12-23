@@ -56,7 +56,7 @@ namespace Smart.Mock
                 };
                 con.SetupCommand(cmd => cmd.SetupResult(new MockDataReader(columns, rows)));
 
-                var list = (await con.QueryAsync<Employee>("SELECT COUNT(*) FROM Employee").ConfigureAwait(false)).ToList();
+                var list = await con.QueryAsync<Employee>("SELECT COUNT(*) FROM Employee").ToListAsync();
 
                 Assert.Equal(3, list.Count);
             }

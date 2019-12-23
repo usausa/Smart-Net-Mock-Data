@@ -16,6 +16,9 @@
     <dependencies>
       <group>
       </group>
+      <group targetFramework="netstandard2.1">
+        <dependency id="System.Data.Common" version="4.3.0" />
+      </group>
       <group targetFramework="netstandard2.0">
         <dependency id="System.Data.Common" version="4.3.0" />
       </group>
@@ -25,6 +28,8 @@
     <tags>smart ado.net mock</tags>
   </metadata>
   <files>
+    <!-- netstandard2.1 -->
+    <file src="Smart.Mock.Data\bin\Release\netstandard2.1\Smart.Mock.Data.dll" target="lib\netstandard2.1" />
     <!-- netstandard2.0 -->
     <file src="Smart.Mock.Data\bin\Release\netstandard2.0\Smart.Mock.Data.dll" target="lib\netstandard2.0" />
     <!-- net462 -->

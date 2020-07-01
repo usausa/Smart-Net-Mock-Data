@@ -15,13 +15,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		Directory.Build.props = Directory.Build.props
 		Directory.Build.targets = Directory.Build.targets
 		README.md = README.md
-		Smart.Mock.Data.nuspec = Smart.Mock.Data.nuspec
 		Smart.Mock.Data.ruleset = Smart.Mock.Data.ruleset
 		Smart.Mock.Data.sln.DotSettings = Smart.Mock.Data.sln.DotSettings
-		Smart.Mock.Data.SqlServer.nuspec = Smart.Mock.Data.SqlServer.nuspec
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Smart.Mock.Data.Tests", "Smart.Mock.Data.Tests\Smart.Mock.Data.Tests.csproj", "{90F3F404-9FCC-44C0-9199-3740A5394EA7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Smart.Mock.Data.Tests", "Smart.Mock.Data.Tests\Smart.Mock.Data.Tests.csproj", "{90F3F404-9FCC-44C0-9199-3740A5394EA7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -6,6 +6,14 @@
     <CodeAnalysisRuleSet>..\Smart.Mock.Data.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <PackageId>Usa.Smart.Mock.Data.SqlServer</PackageId>
+    <Title>Smart.Mock.Data.SqlServer .NET</Title>
+    <Description>Smart mock data library SQL Server extensions for .NET</Description>
+    <Summary>Smart mock data library SQL Server extensions for .NET</Summary>
+    <PackageTags>smart ado.net mock sqlserver</PackageTags>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.4826.1" />
   </ItemGroup>

@@ -1,5 +1,7 @@
 # Smart.Mock.Data .NET - mock data library for .NET
 
+[![NuGet Badge](https://buildstats.info/nuget/Usa.Smart.Mock.Data)](https://www.nuget.org/packages/Usa.Smart.Mock.Data/)
+
 ## What is this?
 
 * ADO.NET mock library
@@ -55,7 +57,8 @@ using (var con = new MockDbConnection())
 
 ## NuGet
 
-| Id                  |
+| Package |
 |---------------------|
-| Usa.Smart.Mock.Data |
+| [![NuGet Badge](https://buildstats.info/nuget/Usa.Smart.Mock.Data)](https://www.nuget.org/packages/Usa.Smart.Mock.Data/) |
+| [![NuGet Badge](https://buildstats.info/nuget/Usa.Smart.Mock.Data.SqlServer)](https://www.nuget.org/packages/Usa.Smart.Mock.Data.SqlServer/) |
 

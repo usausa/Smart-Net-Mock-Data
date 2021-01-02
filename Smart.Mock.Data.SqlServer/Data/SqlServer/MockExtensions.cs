@@ -30,7 +30,7 @@ namespace Smart.Mock.Data.SqlServer
                 using (var reader = new StringReader(executedCommand.CommandText))
                 {
                     parser.Parse(reader, out var errors);
-                    if (errors != null)
+                    if (errors is not null)
                     {
                         result.AddErrors(errors);
                     }
@@ -66,7 +66,7 @@ namespace Smart.Mock.Data.SqlServer
                     using (var reader = new StringReader(executedCommand.CommandText))
                     {
                         parser.Parse(reader, out var errors);
-                        if (errors != null)
+                        if (errors is not null)
                         {
                             result.AddErrors(errors);
                         }

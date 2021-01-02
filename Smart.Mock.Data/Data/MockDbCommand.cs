@@ -4,6 +4,7 @@ namespace Smart.Mock.Data
     using System.Collections.Generic;
     using System.Data;
     using System.Data.Common;
+    using System.Diagnostics.CodeAnalysis;
 
     public class ExecutedCommand
     {
@@ -26,20 +27,21 @@ namespace Smart.Mock.Data
 
     public sealed class MockDbCommand : DbCommand
     {
-        private readonly List<ExecutedCommand> executedCommands = new List<ExecutedCommand>();
+        private readonly List<ExecutedCommand> executedCommands = new();
 
-        private readonly Queue<object> setupedResults = new Queue<object>();
+        private readonly Queue<object?> setupedResults = new();
 
-        private readonly MockDbParameterCollection parameters = new MockDbParameterCollection();
+        private readonly MockDbParameterCollection parameters = new();
 
         public IList<ExecutedCommand> ExecutedCommands => executedCommands;
 
-        public Action<ExecutedCommand> Executing { get; set; }
+        public Action<ExecutedCommand>? Executing { get; set; }
 
-        protected override DbConnection DbConnection { get; set; }
+        protected override DbConnection? DbConnection { get; set; }
 
-        protected override DbTransaction DbTransaction { get; set; }
+        protected override DbTransaction? DbTransaction { get; set; }
 
+        [AllowNull]
         public override string CommandText { get; set; }
 
         public override int CommandTimeout { get; set; }
@@ -67,10 +69,10 @@ namespace Smart.Mock.Data
             var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
             executedCommands.Add(command);
             Executing?.Invoke(command);
-            return (int)setupedResults.Dequeue();
+            return (int)setupedResults.Dequeue()!;
         }
 
-        public override object ExecuteScalar()
+        public override object? ExecuteScalar()
         {
             var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
             executedCommands.Add(command);
@@ -83,10 +85,10 @@ namespace Smart.Mock.Data
             var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
             executedCommands.Add(command);
             Executing?.Invoke(command);
-            return (DbDataReader)setupedResults.Dequeue();
+            return (DbDataReader)setupedResults.Dequeue()!;
         }
 
-        public void SetupResult(object result)
+        public void SetupResult(object? result)
         {
             setupedResults.Enqueue(result);
         }

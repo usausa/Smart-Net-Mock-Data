@@ -1,7 +1,8 @@
-﻿namespace Smart.Mock.Data
+namespace Smart.Mock.Data
 {
     using System.Data;
     using System.Data.Common;
+    using System.Diagnostics.CodeAnalysis;
 
     public class MockDbParameter : DbParameter
     {
@@ -11,11 +12,13 @@
 
         public override bool IsNullable { get; set; }
 
+        [AllowNull]
         public override string ParameterName { get; set; }
 
+        [AllowNull]
         public override string SourceColumn { get; set; }
 
-        public override object Value { get; set; }
+        public override object? Value { get; set; }
 
         public override bool SourceColumnNullMapping { get; set; }
 

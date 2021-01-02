@@ -2,17 +2,19 @@ namespace Smart.Mock.Data
 {
     using System.Data;
     using System.Data.Common;
+    using System.Diagnostics.CodeAnalysis;
 
     public class MockRepeatDbCommand : DbCommand
     {
-        private readonly object result;
+        private readonly object? result;
 
-        private readonly MockDbParameterCollection parameters = new MockDbParameterCollection();
+        private readonly MockDbParameterCollection parameters = new();
 
-        protected override DbConnection DbConnection { get; set; }
+        protected override DbConnection? DbConnection { get; set; }
 
-        protected override DbTransaction DbTransaction { get; set; }
+        protected override DbTransaction? DbTransaction { get; set; }
 
+        [AllowNull]
         public override string CommandText { get; set; }
 
         public override int CommandTimeout { get; set; }
@@ -25,7 +27,7 @@ namespace Smart.Mock.Data
 
         public override bool DesignTimeVisible { get; set; }
 
-        public MockRepeatDbCommand(object result)
+        public MockRepeatDbCommand(object? result)
         {
             this.result = result;
         }
@@ -40,14 +42,14 @@ namespace Smart.Mock.Data
 
         protected override DbParameter CreateDbParameter() => new MockDbParameter();
 
-        public override int ExecuteNonQuery() => (int)result;
+        public override int ExecuteNonQuery() => (int)result!;
 
-        public override object ExecuteScalar() => result;
+        public override object? ExecuteScalar() => result;
 
         protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
         {
             (result as IRepeatDataReader)?.Reset();
-            return (DbDataReader)result;
+            return (DbDataReader)result!;
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Smart.Mock.Data
+namespace Smart.Mock.Data
 {
     using System;
     using System.Collections;
@@ -8,7 +8,7 @@
 
     public class MockDbParameterCollection : DbParameterCollection
     {
-        private readonly List<MockDbParameter> parameters = new List<MockDbParameter>();
+        private readonly List<MockDbParameter> parameters = new();
 
         public override object SyncRoot => ((ICollection)parameters).SyncRoot;
 
@@ -68,7 +68,7 @@
             var index = IndexOf(parameterName);
             if (index == -1)
             {
-                throw new IndexOutOfRangeException($"Parameter {parameterName} not found.");
+                throw new ArgumentException($"Parameter {parameterName} is not found.", nameof(parameterName));
             }
 
             return index;

@@ -24,7 +24,7 @@ namespace Smart.Mock.Data
     {
         private readonly MockColumn[] columns;
 
-        private readonly object[][] rows;
+        private readonly object?[][] rows;
 
         private bool closed;
 
@@ -40,9 +40,9 @@ namespace Smart.Mock.Data
 
         public override bool HasRows => rows.Length > 0;
 
-        public override object this[int ordinal] => rows[current][ordinal];
+        public override object this[int ordinal] => rows[current][ordinal] ?? DBNull.Value;
 
-        public override object this[string name] => rows[current][GetOrdinal(name)];
+        public override object this[string name] => rows[current][GetOrdinal(name)] ?? DBNull.Value;
 
         public MockDataReader(MockColumn[] columns, IEnumerable<object[]> rows)
         {
@@ -91,11 +91,11 @@ namespace Smart.Mock.Data
                 }
             }
 
-            throw new IndexOutOfRangeException("Column is not found.");
+            throw new ArgumentException($"Column {name} is not found.", nameof(name));
         }
 
         public override object GetValue(int ordinal) =>
-            IsDBNull(ordinal) ? DBNull.Value : rows[current][ordinal];
+            IsDBNull(ordinal) ? DBNull.Value : (rows[current][ordinal] ?? DBNull.Value);
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
         public override int GetValues(object[] values)
@@ -103,7 +103,7 @@ namespace Smart.Mock.Data
             var length = Math.Min(values.Length, columns.Length);
             for (var i = 0; i < length; i++)
             {
-                values[i] = IsDBNull(i) ? DBNull.Value : rows[current][i];
+                values[i] = GetValue(i);
             }
 
             return length;
@@ -115,23 +115,31 @@ namespace Smart.Mock.Data
         public override byte GetByte(int ordinal) =>
             Convert.ToByte(rows[current][ordinal], CultureInfo.InvariantCulture);
 
-        public override long GetBytes(int ordinal, long dataOffset, byte[] buffer, int bufferOffset, int length)
+        public override long GetBytes(int ordinal, long dataOffset, byte[]? buffer, int bufferOffset, int length)
         {
-            var bytes = (byte[])rows[current][ordinal];
-            var result = Math.Min(bytes.Length - (int)dataOffset, length);
-            Buffer.BlockCopy(bytes, (int)dataOffset, buffer, bufferOffset, result);
-            return result;
+            if ((buffer is not null) && (rows[current][ordinal] is byte[] bytes))
+            {
+                var result = Math.Min(bytes.Length - (int)dataOffset, length);
+                Buffer.BlockCopy(bytes, (int)dataOffset, buffer, bufferOffset, result);
+                return result;
+            }
+
+            return 0;
         }
 
         public override char GetChar(int ordinal) =>
             Convert.ToChar(rows[current][ordinal], CultureInfo.InvariantCulture);
 
-        public override long GetChars(int ordinal, long dataOffset, char[] buffer, int bufferOffset, int length)
+        public override long GetChars(int ordinal, long dataOffset, char[]? buffer, int bufferOffset, int length)
         {
-            var chars = (char[])rows[current][ordinal];
-            var result = Math.Min(chars.Length - (int)dataOffset, length);
-            Array.Copy(chars, (int)dataOffset, buffer, bufferOffset, result);
-            return result;
+            if ((buffer is not null) && (rows[current][ordinal] is char[] chars))
+            {
+                var result = Math.Min(chars.Length - (int)dataOffset, length);
+                Array.Copy(chars, (int)dataOffset, buffer, bufferOffset, result);
+                return result;
+            }
+
+            return 0;
         }
 
         public override DateTime GetDateTime(int ordinal) =>
@@ -148,9 +156,9 @@ namespace Smart.Mock.Data
 
         public override Guid GetGuid(int ordinal)
         {
-            if (rows[current][ordinal] is Guid)
+            if (rows[current][ordinal] is Guid guid)
             {
-                return (Guid)rows[current][ordinal];
+                return guid;
             }
 
             return Guid.Parse(GetString(ordinal));
@@ -166,6 +174,6 @@ namespace Smart.Mock.Data
             Convert.ToInt64(rows[current][ordinal], CultureInfo.InvariantCulture);
 
         public override string GetString(int ordinal) =>
-            Convert.ToString(rows[current][ordinal], CultureInfo.InvariantCulture);
+            Convert.ToString(rows[current][ordinal], CultureInfo.InvariantCulture)!;
     }
 }

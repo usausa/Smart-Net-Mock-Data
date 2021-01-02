@@ -2,15 +2,17 @@ namespace Smart.Mock.Data
 {
     using System.Data;
     using System.Data.Common;
+    using System.Diagnostics.CodeAnalysis;
 
     public sealed class MockRepeatDbConnection : DbConnection
     {
-        private readonly object result;
+        private readonly object? result;
 
-        private string database;
+        private string database = string.Empty;
 
         private ConnectionState state;
 
+        [AllowNull]
         public override string ConnectionString { get; set; }
 
         public override string Database => database;
@@ -21,7 +23,7 @@ namespace Smart.Mock.Data
 
         public override ConnectionState State => state;
 
-        public MockRepeatDbConnection(object result)
+        public MockRepeatDbConnection(object? result)
         {
             this.result = result;
         }

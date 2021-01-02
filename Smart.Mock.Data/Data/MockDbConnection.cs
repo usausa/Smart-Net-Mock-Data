@@ -4,14 +4,15 @@ namespace Smart.Mock.Data
     using System.Collections.Generic;
     using System.Data;
     using System.Data.Common;
+    using System.Diagnostics.CodeAnalysis;
 
     public sealed class MockDbConnection : DbConnection
     {
-        private readonly Queue<MockDbCommand> setupedCommands = new Queue<MockDbCommand>();
-        private readonly List<MockDbCommand> commands = new List<MockDbCommand>();
-        private readonly List<MockDbTransaction> transactions = new List<MockDbTransaction>();
+        private readonly Queue<MockDbCommand> setupedCommands = new();
+        private readonly List<MockDbCommand> commands = new();
+        private readonly List<MockDbTransaction> transactions = new();
 
-        private string database;
+        private string database = string.Empty;
 
         private ConnectionState state;
 
@@ -19,6 +20,7 @@ namespace Smart.Mock.Data
 
         public IList<MockDbTransaction> Transactions => transactions;
 
+        [AllowNull]
         public override string ConnectionString { get; set; }
 
         public override string Database => database;

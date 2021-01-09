@@ -65,14 +65,10 @@ namespace Smart.Mock.Data
             setupedCommands.Enqueue(command);
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Factory")]
         public void SetupCommand(Action<MockDbCommand> action)
         {
-            if (action is null)
-            {
-                throw new ArgumentNullException(nameof(action));
-            }
-
             var command = new MockDbCommand();
             action(command);
             setupedCommands.Enqueue(command);

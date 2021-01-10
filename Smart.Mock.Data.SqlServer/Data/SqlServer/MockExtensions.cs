@@ -1,6 +1,5 @@
 namespace Smart.Mock.Data.SqlServer
 {
-    using System;
     using System.IO;
     using Microsoft.SqlServer.TransactSql.ScriptDom;
 
@@ -11,29 +10,17 @@ namespace Smart.Mock.Data.SqlServer
             return ValidateSql(command, DefaultParser.Create());
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
         public static ValidateResult ValidateSql(this MockDbCommand command, TSqlParser parser)
         {
-            if (command is null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-
-            if (parser is null)
-            {
-                throw new ArgumentNullException(nameof(parser));
-            }
-
             var result = new ValidateResult();
-
             foreach (var executedCommand in command.ExecutedCommands)
             {
-                using (var reader = new StringReader(executedCommand.CommandText))
+                using var reader = new StringReader(executedCommand.CommandText);
+                parser.Parse(reader, out var errors);
+                if (errors is not null)
                 {
-                    parser.Parse(reader, out var errors);
-                    if (errors is not null)
-                    {
-                        result.AddErrors(errors);
-                    }
+                    result.AddErrors(errors);
                 }
             }
 
@@ -45,31 +32,19 @@ namespace Smart.Mock.Data.SqlServer
             return ValidateSql(connection, DefaultParser.Create());
         }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
         public static ValidateResult ValidateSql(this MockDbConnection connection, TSqlParser parser)
         {
-            if (connection is null)
-            {
-                throw new ArgumentNullException(nameof(connection));
-            }
-
-            if (parser is null)
-            {
-                throw new ArgumentNullException(nameof(parser));
-            }
-
             var result = new ValidateResult();
-
             foreach (var command in connection.Commands)
             {
                 foreach (var executedCommand in command.ExecutedCommands)
                 {
-                    using (var reader = new StringReader(executedCommand.CommandText))
+                    using var reader = new StringReader(executedCommand.CommandText);
+                    parser.Parse(reader, out var errors);
+                    if (errors is not null)
                     {
-                        parser.Parse(reader, out var errors);
-                        if (errors is not null)
-                        {
-                            result.AddErrors(errors);
-                        }
+                        result.AddErrors(errors);
                     }
                 }
             }

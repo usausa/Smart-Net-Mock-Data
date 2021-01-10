@@ -1,6 +1,5 @@
 namespace Smart.Mock.Data.SqlServer
 {
-    using System;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Text;
@@ -13,13 +12,9 @@ namespace Smart.Mock.Data.SqlServer
 
         public IList<ParseError> Errors { get; } = new List<ParseError>();
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
         public void AddErrors(IList<ParseError> errors)
         {
-            if (errors is null)
-            {
-                throw new ArgumentNullException(nameof(errors));
-            }
-
             foreach (var error in errors)
             {
                 Errors.Add(error);

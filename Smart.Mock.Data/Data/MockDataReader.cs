@@ -1,4 +1,4 @@
-namespace Smart.Mock.Data
+﻿namespace Smart.Mock.Data
 {
     using System;
     using System.Collections;
@@ -20,6 +20,7 @@ namespace Smart.Mock.Data
         }
     }
 
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
     public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     {
         private readonly MockColumn[] columns;

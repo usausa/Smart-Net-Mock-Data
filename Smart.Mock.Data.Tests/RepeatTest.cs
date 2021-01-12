@@ -1,4 +1,4 @@
-namespace Smart.Mock
+﻿namespace Smart.Mock
 {
     using System.Collections.Generic;
     using System.Linq;
@@ -14,14 +14,12 @@ namespace Smart.Mock
         [Fact]
         public void ExecuteNonQueryRepeat()
         {
-            using (var con = new MockRepeatDbConnection(1))
-            {
-                var value = con.Execute("UPDATE Test SET NAME = 'UsaUsa' WHERE Id = 1234");
-                Assert.Equal(1, value);
+            using var con = new MockRepeatDbConnection(1);
+            var value = con.Execute("UPDATE Test SET NAME = 'UsaUsa' WHERE Id = 1234");
+            Assert.Equal(1, value);
 
-                value = con.Execute("UPDATE Test SET NAME = 'UsaUsa' WHERE Id = 1234");
-                Assert.Equal(1, value);
-            }
+            value = con.Execute("UPDATE Test SET NAME = 'UsaUsa' WHERE Id = 1234");
+            Assert.Equal(1, value);
         }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Ignore")]
@@ -40,14 +38,12 @@ namespace Smart.Mock
                 new object[] { 3, "Employee3" }
             };
 
-            using (var con = new MockRepeatDbConnection(new MockDataReader(columns, rows)))
-            {
-                var list = con.Query<Employee>("SELECT COUNT(*) FROM Employee").ToList();
-                Assert.Equal(3, list.Count);
+            using var con = new MockRepeatDbConnection(new MockDataReader(columns, rows));
+            var list = con.Query<Employee>("SELECT COUNT(*) FROM Employee").ToList();
+            Assert.Equal(3, list.Count);
 
-                list = con.Query<Employee>("SELECT COUNT(*) FROM Employee").ToList();
-                Assert.Equal(3, list.Count);
-            }
+            list = con.Query<Employee>("SELECT COUNT(*) FROM Employee").ToList();
+            Assert.Equal(3, list.Count);
         }
     }
 }

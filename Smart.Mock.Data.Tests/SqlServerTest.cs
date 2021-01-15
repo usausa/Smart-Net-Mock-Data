@@ -1,4 +1,4 @@
-﻿namespace Smart.Mock
+namespace Smart.Mock
 {
     using Smart.Data.Mapper;
     using Smart.Mock.Data;

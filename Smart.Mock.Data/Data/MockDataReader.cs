@@ -1,4 +1,4 @@
-﻿namespace Smart.Mock.Data
+namespace Smart.Mock.Data
 {
     using System;
     using System.Collections;

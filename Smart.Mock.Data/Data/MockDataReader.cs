@@ -16,7 +16,7 @@ namespace Smart.Mock.Data
         public MockColumn(Type dataType, string name)
         {
             DataType = dataType;
-            Name = name;
+            Name = new string(name);    // Convert to other object
         }
     }
 

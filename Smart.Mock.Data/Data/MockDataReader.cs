@@ -84,9 +84,10 @@ namespace Smart.Mock.Data
 
         public override int GetOrdinal(string name)
         {
-            for (var i = 0; i < columns.Length; i++)
+            var columnsLocal = columns;
+            for (var i = 0; i < columnsLocal.Length; i++)
             {
-                if (String.Equals(columns[i].Name, name, StringComparison.OrdinalIgnoreCase))
+                if (String.Equals(columnsLocal[i].Name, name, StringComparison.OrdinalIgnoreCase))
                 {
                     return i;
                 }

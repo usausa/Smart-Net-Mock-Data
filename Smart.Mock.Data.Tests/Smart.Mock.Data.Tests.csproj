@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -12,7 +12,7 @@
     <PackageReference Include="Microsoft.SqlServer.DacFx" Version="150.5084.2" />
     <PackageReference Include="System.Data.Common" Version="4.3.0" />
     <PackageReference Include="System.Linq.Async" Version="5.0.0" />
-    <PackageReference Include="Usa.Smart.Data.Mapper" Version="2.0.0-beta2" />
+    <PackageReference Include="Usa.Smart.Data.Mapper" Version="1.4.5" />
     <PackageReference Include="xunit" Version="2.4.1" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

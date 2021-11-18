@@ -15,7 +15,9 @@ namespace Smart.Mock
         [Fact]
         public async Task ExecuteNonQueryAsync()
         {
+#pragma warning disable CA2007
             await using var con = new MockDbConnection();
+#pragma warning restore CA2007
             con.SetupCommand(cmd => cmd.SetupResult(1));
 
             var value = await con.ExecuteAsync("UPDATE Test SET NAME = 'UsaUsa' WHERE Id = 1234").ConfigureAwait(false);
@@ -26,7 +28,9 @@ namespace Smart.Mock
         [Fact]
         public async Task ExecuteScalarAsync()
         {
+#pragma warning disable CA2007
             await using var con = new MockDbConnection();
+#pragma warning restore CA2007
             con.SetupCommand(cmd => cmd.SetupResult(1));
 
             var value = await con.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Test").ConfigureAwait(false);
@@ -37,7 +41,9 @@ namespace Smart.Mock
         [Fact]
         public async Task ExecuteReaderAsync()
         {
+#pragma warning disable CA2007
             await using var con = new MockDbConnection();
+#pragma warning restore CA2007
             var columns = new[]
             {
                 new MockColumn(typeof(int), "Id"),

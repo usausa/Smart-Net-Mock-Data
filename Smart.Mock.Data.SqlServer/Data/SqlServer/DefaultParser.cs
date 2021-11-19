@@ -1,18 +1,17 @@
-namespace Smart.Mock.Data.SqlServer
+namespace Smart.Mock.Data.SqlServer;
+
+using System;
+
+using Microsoft.SqlServer.TransactSql.ScriptDom;
+
+public static class DefaultParser
 {
-    using System;
+    private static Func<TSqlParser> parserFactory = () => new TSql130Parser(true);
 
-    using Microsoft.SqlServer.TransactSql.ScriptDom;
-
-    public static class DefaultParser
+    public static void SetFactory(Func<TSqlParser> factory)
     {
-        private static Func<TSqlParser> parserFactory = () => new TSql130Parser(true);
-
-        public static void SetFactory(Func<TSqlParser> factory)
-        {
-            parserFactory = factory;
-        }
-
-        public static TSqlParser Create() => parserFactory();
+        parserFactory = factory;
     }
+
+    public static TSqlParser Create() => parserFactory();
 }

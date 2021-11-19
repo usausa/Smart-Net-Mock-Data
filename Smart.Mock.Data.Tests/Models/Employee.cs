@@ -1,9 +1,8 @@
-namespace Smart.Mock.Models
-{
-    public class Employee
-    {
-        public int Id { get; set; }
+namespace Smart.Mock.Models;
 
-        public string? Name { get; set; }
-    }
+public class Employee
+{
+    public int Id { get; set; }
+
+    public string? Name { get; set; }
 }

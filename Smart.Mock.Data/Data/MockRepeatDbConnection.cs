@@ -1,56 +1,55 @@
-namespace Smart.Mock.Data
+namespace Smart.Mock.Data;
+
+using System.Data;
+using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
+
+public sealed class MockRepeatDbConnection : DbConnection
 {
-    using System.Data;
-    using System.Data.Common;
-    using System.Diagnostics.CodeAnalysis;
+    private readonly object? result;
 
-    public sealed class MockRepeatDbConnection : DbConnection
+    private string database = string.Empty;
+
+    private ConnectionState state;
+
+    [AllowNull]
+    public override string ConnectionString { get; set; }
+
+    public override string Database => database;
+
+    public override string DataSource => string.Empty;
+
+    public override string ServerVersion => string.Empty;
+
+    public override ConnectionState State => state;
+
+    public MockRepeatDbConnection(object? result)
     {
-        private readonly object? result;
+        this.result = result;
+    }
 
-        private string database = string.Empty;
+    public override void Open()
+    {
+        state = ConnectionState.Open;
+    }
 
-        private ConnectionState state;
+    public override void Close()
+    {
+        state = ConnectionState.Closed;
+    }
 
-        [AllowNull]
-        public override string ConnectionString { get; set; }
+    public override void ChangeDatabase(string databaseName)
+    {
+        database = databaseName;
+    }
 
-        public override string Database => database;
+    protected override DbTransaction BeginDbTransaction(IsolationLevel isolationLevel)
+    {
+        return new MockDbTransaction(this, isolationLevel);
+    }
 
-        public override string DataSource => string.Empty;
-
-        public override string ServerVersion => string.Empty;
-
-        public override ConnectionState State => state;
-
-        public MockRepeatDbConnection(object? result)
-        {
-            this.result = result;
-        }
-
-        public override void Open()
-        {
-            state = ConnectionState.Open;
-        }
-
-        public override void Close()
-        {
-            state = ConnectionState.Closed;
-        }
-
-        public override void ChangeDatabase(string databaseName)
-        {
-            database = databaseName;
-        }
-
-        protected override DbTransaction BeginDbTransaction(IsolationLevel isolationLevel)
-        {
-            return new MockDbTransaction(this, isolationLevel);
-        }
-
-        protected override DbCommand CreateDbCommand()
-        {
-            return new MockRepeatDbCommand(result);
-        }
+    protected override DbCommand CreateDbCommand()
+    {
+        return new MockRepeatDbCommand(result);
     }
 }

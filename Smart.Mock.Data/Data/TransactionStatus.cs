@@ -1,11 +1,10 @@
-namespace Smart.Mock.Data
+namespace Smart.Mock.Data;
+
+public enum TransactionStatus
 {
-    public enum TransactionStatus
-    {
-        Unknown,
+    Unknown,
 
-        Committed,
+    Committed,
 
-        RollBacked
-    }
+    RollBacked
 }

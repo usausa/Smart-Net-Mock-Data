@@ -1,24 +1,23 @@
-namespace Smart.Mock.Services
+namespace Smart.Mock.Services;
+
+using System.Collections.Generic;
+
+using Smart.Data.Mapper;
+using Smart.Mock.Infrastructure;
+using Smart.Mock.Models;
+
+public class EmployeeService
 {
-    using System.Collections.Generic;
+    private IConnectionFactory ConnectionFactory { get; }
 
-    using Smart.Data.Mapper;
-    using Smart.Mock.Infrastructure;
-    using Smart.Mock.Models;
-
-    public class EmployeeService
+    public EmployeeService(IConnectionFactory connectionFactory)
     {
-        private IConnectionFactory ConnectionFactory { get; }
+        ConnectionFactory = connectionFactory;
+    }
 
-        public EmployeeService(IConnectionFactory connectionFactory)
-        {
-            ConnectionFactory = connectionFactory;
-        }
-
-        public IList<Employee> QueryEmployeeList()
-        {
-            return ConnectionFactory.Using(con =>
-                con.QueryList<Employee>("SELECT * FROM Employee"));
-        }
+    public IList<Employee> QueryEmployeeList()
+    {
+        return ConnectionFactory.Using(con =>
+            con.QueryList<Employee>("SELECT * FROM Employee"));
     }
 }

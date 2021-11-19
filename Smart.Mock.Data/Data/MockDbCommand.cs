@@ -1,96 +1,95 @@
-namespace Smart.Mock.Data
+namespace Smart.Mock.Data;
+
+using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
+
+public class ExecutedCommand
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Data.Common;
-    using System.Diagnostics.CodeAnalysis;
+    public string CommandText { get; }
 
-    public class ExecutedCommand
+    public int CommandTimeout { get; }
+
+    public CommandType CommandType { get; }
+
+    public MockDbParameterCollection Parameters { get; }
+
+    public ExecutedCommand(string commandText, int commandTimeout, CommandType commandType, MockDbParameterCollection parameters)
     {
-        public string CommandText { get; }
+        CommandText = commandText;
+        CommandTimeout = commandTimeout;
+        CommandType = commandType;
+        Parameters = parameters;
+    }
+}
 
-        public int CommandTimeout { get; }
+public sealed class MockDbCommand : DbCommand
+{
+    private readonly List<ExecutedCommand> executedCommands = new();
 
-        public CommandType CommandType { get; }
+    private readonly Queue<object?> setupedResults = new();
 
-        public MockDbParameterCollection Parameters { get; }
+    private readonly MockDbParameterCollection parameters = new();
 
-        public ExecutedCommand(string commandText, int commandTimeout, CommandType commandType, MockDbParameterCollection parameters)
-        {
-            CommandText = commandText;
-            CommandTimeout = commandTimeout;
-            CommandType = commandType;
-            Parameters = parameters;
-        }
+    public IList<ExecutedCommand> ExecutedCommands => executedCommands;
+
+    public Action<ExecutedCommand>? Executing { get; set; }
+
+    protected override DbConnection? DbConnection { get; set; }
+
+    protected override DbTransaction? DbTransaction { get; set; }
+
+    [AllowNull]
+    public override string CommandText { get; set; }
+
+    public override int CommandTimeout { get; set; }
+
+    public override CommandType CommandType { get; set; }
+
+    protected override DbParameterCollection DbParameterCollection => parameters;
+
+    public override UpdateRowSource UpdatedRowSource { get; set; }
+
+    public override bool DesignTimeVisible { get; set; }
+
+    public override void Prepare()
+    {
     }
 
-    public sealed class MockDbCommand : DbCommand
+    public override void Cancel()
     {
-        private readonly List<ExecutedCommand> executedCommands = new();
+    }
 
-        private readonly Queue<object?> setupedResults = new();
+    protected override DbParameter CreateDbParameter() => new MockDbParameter();
 
-        private readonly MockDbParameterCollection parameters = new();
+    public override int ExecuteNonQuery()
+    {
+        var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
+        executedCommands.Add(command);
+        Executing?.Invoke(command);
+        return (int)setupedResults.Dequeue()!;
+    }
 
-        public IList<ExecutedCommand> ExecutedCommands => executedCommands;
+    public override object? ExecuteScalar()
+    {
+        var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
+        executedCommands.Add(command);
+        Executing?.Invoke(command);
+        return setupedResults.Dequeue();
+    }
 
-        public Action<ExecutedCommand>? Executing { get; set; }
+    protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
+    {
+        var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
+        executedCommands.Add(command);
+        Executing?.Invoke(command);
+        return (DbDataReader)setupedResults.Dequeue()!;
+    }
 
-        protected override DbConnection? DbConnection { get; set; }
-
-        protected override DbTransaction? DbTransaction { get; set; }
-
-        [AllowNull]
-        public override string CommandText { get; set; }
-
-        public override int CommandTimeout { get; set; }
-
-        public override CommandType CommandType { get; set; }
-
-        protected override DbParameterCollection DbParameterCollection => parameters;
-
-        public override UpdateRowSource UpdatedRowSource { get; set; }
-
-        public override bool DesignTimeVisible { get; set; }
-
-        public override void Prepare()
-        {
-        }
-
-        public override void Cancel()
-        {
-        }
-
-        protected override DbParameter CreateDbParameter() => new MockDbParameter();
-
-        public override int ExecuteNonQuery()
-        {
-            var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
-            executedCommands.Add(command);
-            Executing?.Invoke(command);
-            return (int)setupedResults.Dequeue()!;
-        }
-
-        public override object? ExecuteScalar()
-        {
-            var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
-            executedCommands.Add(command);
-            Executing?.Invoke(command);
-            return setupedResults.Dequeue();
-        }
-
-        protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
-        {
-            var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
-            executedCommands.Add(command);
-            Executing?.Invoke(command);
-            return (DbDataReader)setupedResults.Dequeue()!;
-        }
-
-        public void SetupResult(object? result)
-        {
-            setupedResults.Enqueue(result);
-        }
+    public void SetupResult(object? result)
+    {
+        setupedResults.Enqueue(result);
     }
 }

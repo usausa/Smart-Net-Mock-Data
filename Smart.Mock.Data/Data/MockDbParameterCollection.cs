@@ -1,78 +1,77 @@
-namespace Smart.Mock.Data
+namespace Smart.Mock.Data;
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Data.Common;
+using System.Linq;
+
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
+public class MockDbParameterCollection : DbParameterCollection
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Data.Common;
-    using System.Linq;
+    private readonly List<MockDbParameter> parameters = new();
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
-    public class MockDbParameterCollection : DbParameterCollection
+    public override object SyncRoot => ((ICollection)parameters).SyncRoot;
+
+    public override int Count => parameters.Count;
+
+    public override IEnumerator GetEnumerator() => parameters.GetEnumerator();
+
+    protected override DbParameter GetParameter(int index) => parameters[index];
+
+    protected override void SetParameter(int index, DbParameter value) => parameters[index] = (MockDbParameter)value;
+
+    protected override void SetParameter(string parameterName, DbParameter value) => parameters[IndexOfChecked(parameterName)] = (MockDbParameter)value;
+
+    protected override DbParameter GetParameter(string parameterName) => parameters[IndexOfChecked(parameterName)];
+
+    public override int Add(object value)
     {
-        private readonly List<MockDbParameter> parameters = new();
+        parameters.Add((MockDbParameter)value);
+        return parameters.Count - 1;
+    }
 
-        public override object SyncRoot => ((ICollection)parameters).SyncRoot;
+    public override void AddRange(Array values) => parameters.AddRange(values.Cast<MockDbParameter>());
 
-        public override int Count => parameters.Count;
+    public override void Clear() => parameters.Clear();
 
-        public override IEnumerator GetEnumerator() => parameters.GetEnumerator();
+    public override bool Contains(object value) => parameters.Contains((MockDbParameter)value);
 
-        protected override DbParameter GetParameter(int index) => parameters[index];
+    public override bool Contains(string value) => IndexOf(value) != -1;
 
-        protected override void SetParameter(int index, DbParameter value) => parameters[index] = (MockDbParameter)value;
+    public override void CopyTo(Array array, int index) => parameters.CopyTo((MockDbParameter[])array, index);
 
-        protected override void SetParameter(string parameterName, DbParameter value) => parameters[IndexOfChecked(parameterName)] = (MockDbParameter)value;
+    public override int IndexOf(object value) => parameters.IndexOf((MockDbParameter)value);
 
-        protected override DbParameter GetParameter(string parameterName) => parameters[IndexOfChecked(parameterName)];
-
-        public override int Add(object value)
+    public override int IndexOf(string parameterName)
+    {
+        for (var i = 0; i < parameters.Count; i++)
         {
-            parameters.Add((MockDbParameter)value);
-            return parameters.Count - 1;
-        }
-
-        public override void AddRange(Array values) => parameters.AddRange(values.Cast<MockDbParameter>());
-
-        public override void Clear() => parameters.Clear();
-
-        public override bool Contains(object value) => parameters.Contains((MockDbParameter)value);
-
-        public override bool Contains(string value) => IndexOf(value) != -1;
-
-        public override void CopyTo(Array array, int index) => parameters.CopyTo((MockDbParameter[])array, index);
-
-        public override int IndexOf(object value) => parameters.IndexOf((MockDbParameter)value);
-
-        public override int IndexOf(string parameterName)
-        {
-            for (var i = 0; i < parameters.Count; i++)
+            if (String.Equals(parameters[i].ParameterName, parameterName, StringComparison.OrdinalIgnoreCase))
             {
-                if (String.Equals(parameters[i].ParameterName, parameterName, StringComparison.OrdinalIgnoreCase))
-                {
-                    return i;
-                }
+                return i;
             }
-
-            return -1;
         }
 
-        public override void Insert(int index, object value) => parameters.Insert(index, (MockDbParameter)value);
+        return -1;
+    }
 
-        public override void Remove(object value) => parameters.Remove((MockDbParameter)value);
+    public override void Insert(int index, object value) => parameters.Insert(index, (MockDbParameter)value);
 
-        public override void RemoveAt(int index) => parameters.RemoveAt(index);
+    public override void Remove(object value) => parameters.Remove((MockDbParameter)value);
 
-        public override void RemoveAt(string parameterName) => parameters.RemoveAt(IndexOfChecked(parameterName));
+    public override void RemoveAt(int index) => parameters.RemoveAt(index);
 
-        private int IndexOfChecked(string parameterName)
+    public override void RemoveAt(string parameterName) => parameters.RemoveAt(IndexOfChecked(parameterName));
+
+    private int IndexOfChecked(string parameterName)
+    {
+        var index = IndexOf(parameterName);
+        if (index == -1)
         {
-            var index = IndexOf(parameterName);
-            if (index == -1)
-            {
-                throw new ArgumentException($"Parameter {parameterName} is not found.", nameof(parameterName));
-            }
-
-            return index;
+            throw new ArgumentException($"Parameter {parameterName} is not found.", nameof(parameterName));
         }
+
+        return index;
     }
 }

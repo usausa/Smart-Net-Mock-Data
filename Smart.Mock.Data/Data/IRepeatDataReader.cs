@@ -1,7 +1,6 @@
-namespace Smart.Mock.Data
+namespace Smart.Mock.Data;
+
+public interface IRepeatDataReader
 {
-    public interface IRepeatDataReader
-    {
-        void Reset();
-    }
+    void Reset();
 }

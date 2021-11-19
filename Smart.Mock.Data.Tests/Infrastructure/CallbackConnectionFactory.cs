@@ -1,20 +1,19 @@
-namespace Smart.Mock.Infrastructure
+namespace Smart.Mock.Infrastructure;
+
+using System;
+using System.Data.Common;
+
+public class CallbackConnectionFactory : IConnectionFactory
 {
-    using System;
-    using System.Data.Common;
+    private readonly Func<DbConnection> factory;
 
-    public class CallbackConnectionFactory : IConnectionFactory
+    public CallbackConnectionFactory(Func<DbConnection> factory)
     {
-        private readonly Func<DbConnection> factory;
+        this.factory = factory;
+    }
 
-        public CallbackConnectionFactory(Func<DbConnection> factory)
-        {
-            this.factory = factory;
-        }
-
-        public DbConnection CreateConnection()
-        {
-            return factory();
-        }
+    public DbConnection CreateConnection()
+    {
+        return factory();
     }
 }

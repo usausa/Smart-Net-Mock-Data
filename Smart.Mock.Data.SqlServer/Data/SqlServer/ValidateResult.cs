@@ -1,41 +1,40 @@
-namespace Smart.Mock.Data.SqlServer
+namespace Smart.Mock.Data.SqlServer;
+
+using System.Collections.Generic;
+using System.Globalization;
+using System.Text;
+
+using Microsoft.SqlServer.TransactSql.ScriptDom;
+
+public class ValidateResult
 {
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Text;
+    public bool Valid => Errors.Count == 0;
 
-    using Microsoft.SqlServer.TransactSql.ScriptDom;
+    public IList<ParseError> Errors { get; } = new List<ParseError>();
 
-    public class ValidateResult
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
+    public void AddErrors(IList<ParseError> errors)
     {
-        public bool Valid => Errors.Count == 0;
-
-        public IList<ParseError> Errors { get; } = new List<ParseError>();
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
-        public void AddErrors(IList<ParseError> errors)
+        foreach (var error in errors)
         {
-            foreach (var error in errors)
-            {
-                Errors.Add(error);
-            }
+            Errors.Add(error);
+        }
+    }
+
+    public override string ToString()
+    {
+        var sb = new StringBuilder();
+        foreach (var error in Errors)
+        {
+            sb.AppendFormat(
+                CultureInfo.InvariantCulture,
+                "Error [{0}] (Line = {1}, Column = {2}) : '{3}'\r\n",
+                error.Number,
+                error.Line,
+                error.Column,
+                error.Message);
         }
 
-        public override string ToString()
-        {
-            var sb = new StringBuilder();
-            foreach (var error in Errors)
-            {
-                sb.AppendFormat(
-                    CultureInfo.InvariantCulture,
-                    "Error [{0}] (Line = {1}, Column = {2}) : '{3}'\r\n",
-                    error.Number,
-                    error.Line,
-                    error.Column,
-                    error.Message);
-            }
-
-            return sb.ToString();
-        }
+        return sb.ToString();
     }
 }

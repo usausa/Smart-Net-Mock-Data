@@ -1,7 +1,5 @@
 namespace Smart.Mock.Services;
 
-using System.Collections.Generic;
-
 using Smart.Mock.Data;
 using Smart.Mock.Data.SqlServer;
 using Smart.Mock.Infrastructure;

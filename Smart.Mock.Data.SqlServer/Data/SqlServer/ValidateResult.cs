@@ -1,6 +1,5 @@
 namespace Smart.Mock.Data.SqlServer;
 
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 

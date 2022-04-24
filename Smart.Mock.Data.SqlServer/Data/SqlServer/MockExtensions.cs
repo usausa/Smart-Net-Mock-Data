@@ -1,6 +1,5 @@
 namespace Smart.Mock.Data.SqlServer;
 
-using System.IO;
 using Microsoft.SqlServer.TransactSql.ScriptDom;
 
 public static class MockExtensions

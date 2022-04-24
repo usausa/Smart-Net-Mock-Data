@@ -8,9 +8,9 @@
 
   <PropertyGroup>
     <PackageId>Usa.Smart.Mock.Data</PackageId>
-    <Title>Smart.Mock.Data .NET</Title>
-    <Description>Smart mock data library for .NET</Description>
-    <Summary>Smart mock data library for .NET</Summary>
+    <Title>Smart.Mock.Data</Title>
+    <Description>Smart mock data library</Description>
+    <Summary>Smart mock data library</Summary>
     <PackageTags>smart ado.net mock</PackageTags>
   </PropertyGroup>
 

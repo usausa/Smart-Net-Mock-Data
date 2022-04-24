@@ -1,11 +1,8 @@
 namespace Smart.Mock.Data;
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data.Common;
 using System.Globalization;
-using System.Linq;
 
 public class MockColumn
 {

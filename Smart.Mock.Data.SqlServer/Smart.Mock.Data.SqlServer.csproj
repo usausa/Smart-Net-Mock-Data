@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>net6.0;net5.0;netcoreapp3.1;netstandard2.1</TargetFrameworks>
@@ -8,9 +8,9 @@
 
   <PropertyGroup>
     <PackageId>Usa.Smart.Mock.Data.SqlServer</PackageId>
-    <Title>Smart.Mock.Data.SqlServer .NET</Title>
-    <Description>Smart mock data library SQL Server extensions for .NET</Description>
-    <Summary>Smart mock data library SQL Server extensions for .NET</Summary>
+    <Title>Smart.Mock.Data.SqlServer</Title>
+    <Description>Smart mock data library SQL Server extensions</Description>
+    <Summary>Smart mock data library SQL Server extensions</Summary>
     <PackageTags>smart ado.net mock sqlserver</PackageTags>
   </PropertyGroup>
 

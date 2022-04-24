@@ -1,7 +1,5 @@
 namespace Smart.Mock.Data.SqlServer;
 
-using System;
-
 using Microsoft.SqlServer.TransactSql.ScriptDom;
 
 public static class DefaultParser

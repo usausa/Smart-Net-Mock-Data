@@ -1,6 +1,5 @@
 namespace Smart.Mock.Infrastructure;
 
-using System;
 using System.Data.Common;
 
 public interface IConnectionFactory

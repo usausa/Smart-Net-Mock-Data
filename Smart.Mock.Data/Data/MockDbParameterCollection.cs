@@ -1,10 +1,7 @@
 namespace Smart.Mock.Data;
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
 
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
 public class MockDbParameterCollection : DbParameterCollection

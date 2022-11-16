@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;netcoreapp3.1;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>net7.0;net6.0;netcoreapp3.1;netstandard2.1</TargetFrameworks>
     <RootNamespace>Smart.Mock</RootNamespace>
     <CodeAnalysisRuleSet>..\Smart.Mock.Data.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
@@ -15,7 +15,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="160.5400.1" />
+    <PackageReference Include="Microsoft.SqlServer.DacFx" Version="161.6374.0" />
   </ItemGroup>
 
   <ItemGroup>

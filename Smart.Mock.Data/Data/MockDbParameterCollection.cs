@@ -3,7 +3,7 @@ namespace Smart.Mock.Data;
 using System.Collections;
 using System.Data.Common;
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
 public class MockDbParameterCollection : DbParameterCollection
 {
     private readonly List<MockDbParameter> parameters = new();

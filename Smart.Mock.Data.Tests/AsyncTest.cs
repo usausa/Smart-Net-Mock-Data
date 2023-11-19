@@ -14,9 +14,9 @@ public class AsyncTest
 #pragma warning disable CA2007
         await using var con = new MockDbConnection();
 #pragma warning restore CA2007
-        con.SetupCommand(static cmd => cmd.SetupResult(1));
+        con.SetupCommand(cmd => cmd.SetupResult(1));
 
-        var value = await con.ExecuteAsync("UPDATE Test SET NAME = 'UsaUsa' WHERE Id = 1234").ConfigureAwait(false);
+        var value = await con.ExecuteAsync("UPDATE Test SET NAME = 'UsaUsa' WHERE Id = 1234");
 
         Assert.Equal(1, value);
     }
@@ -27,9 +27,9 @@ public class AsyncTest
 #pragma warning disable CA2007
         await using var con = new MockDbConnection();
 #pragma warning restore CA2007
-        con.SetupCommand(static cmd => cmd.SetupResult(1));
+        con.SetupCommand(cmd => cmd.SetupResult(1));
 
-        var value = await con.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Test").ConfigureAwait(false);
+        var value = await con.ExecuteScalarAsync<int>("SELECT COUNT(*) FROM Test");
 
         Assert.Equal(1, value);
     }
@@ -53,7 +53,7 @@ public class AsyncTest
         };
         con.SetupCommand(cmd => cmd.SetupResult(new MockDataReader(columns, rows)));
 
-        var list = await con.QueryAsync<Employee>("SELECT COUNT(*) FROM Employee").ToListAsync().ConfigureAwait(false);
+        var list = await con.QueryAsync<Employee>("SELECT COUNT(*) FROM Employee").ToListAsync();
 
         Assert.Equal(3, list.Count);
     }

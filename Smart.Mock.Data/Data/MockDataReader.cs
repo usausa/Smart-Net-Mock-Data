@@ -17,7 +17,7 @@ public class MockColumn
     }
 }
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
+[System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
 public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 {
     private readonly MockColumn[] columns;
@@ -96,7 +96,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     public override object GetValue(int ordinal) =>
         IsDBNull(ordinal) ? DBNull.Value : (rows[current][ordinal] ?? DBNull.Value);
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
     public override int GetValues(object[] values)
     {
         var length = Math.Min(values.Length, columns.Length);

@@ -11,7 +11,7 @@ public class ValidateResult
 
     public IList<ParseError> Errors { get; } = new List<ParseError>();
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
+    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
     public void AddErrors(IList<ParseError> errors)
     {
         foreach (var error in errors)

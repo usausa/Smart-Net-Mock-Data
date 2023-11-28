@@ -7,8 +7,8 @@ using System.Diagnostics.CodeAnalysis;
 public sealed class MockDbConnection : DbConnection
 {
     private readonly Queue<MockDbCommand> setupedCommands = new();
-    private readonly List<MockDbCommand> commands = new();
-    private readonly List<MockDbTransaction> transactions = new();
+    private readonly List<MockDbCommand> commands = [];
+    private readonly List<MockDbTransaction> transactions = [];
 
     private string database = string.Empty;
 

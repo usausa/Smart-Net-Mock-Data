@@ -8,7 +8,7 @@ public class MockRepeatDbCommand : DbCommand
 {
     private readonly object? result;
 
-    private readonly MockDbParameterCollection parameters = new();
+    private readonly MockDbParameterCollection parameters = [];
 
     protected override DbConnection? DbConnection { get; set; }
 

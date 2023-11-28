@@ -6,7 +6,7 @@ using System.Data.Common;
 [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
 public class MockDbParameterCollection : DbParameterCollection
 {
-    private readonly List<MockDbParameter> parameters = new();
+    private readonly List<MockDbParameter> parameters = [];
 
     public override object SyncRoot => ((ICollection)parameters).SyncRoot;
 

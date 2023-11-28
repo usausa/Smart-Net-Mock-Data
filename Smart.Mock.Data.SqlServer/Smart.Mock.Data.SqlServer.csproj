@@ -10,7 +10,6 @@
     <PackageId>Usa.Smart.Mock.Data.SqlServer</PackageId>
     <Title>Smart.Mock.Data.SqlServer</Title>
     <Description>Smart mock data library SQL Server extensions</Description>
-    <Summary>Smart mock data library SQL Server extensions</Summary>
     <PackageTags>smart ado.net mock sqlserver</PackageTags>
   </PropertyGroup>
 

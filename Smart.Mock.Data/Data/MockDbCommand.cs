@@ -25,11 +25,11 @@ public class ExecutedCommand
 
 public sealed class MockDbCommand : DbCommand
 {
-    private readonly List<ExecutedCommand> executedCommands = new();
+    private readonly List<ExecutedCommand> executedCommands = [];
 
     private readonly Queue<object?> setupedResults = new();
 
-    private readonly MockDbParameterCollection parameters = new();
+    private readonly MockDbParameterCollection parameters = [];
 
     public IList<ExecutedCommand> ExecutedCommands => executedCommands;
 

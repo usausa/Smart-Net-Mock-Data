@@ -4,8 +4,6 @@ using Smart.Data.Mapper;
 using Smart.Mock.Data;
 using Smart.Mock.Data.SqlServer;
 
-using Xunit;
-
 public sealed class SqlServerTest
 {
     [Fact]

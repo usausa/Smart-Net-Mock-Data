@@ -4,8 +4,6 @@ using Smart.Data.Mapper;
 using Smart.Mock.Data;
 using Smart.Mock.Models;
 
-using Xunit;
-
 public sealed class RepeatTest
 {
     [Fact]

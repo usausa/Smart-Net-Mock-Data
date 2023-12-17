@@ -4,8 +4,6 @@ using Smart.Mock.Data;
 using Smart.Mock.Data.SqlServer;
 using Smart.Mock.Infrastructure;
 
-using Xunit;
-
 public sealed class EmployeeServiceTest
 {
     [Fact]

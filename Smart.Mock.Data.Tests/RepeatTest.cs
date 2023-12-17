@@ -6,7 +6,7 @@ using Smart.Mock.Models;
 
 using Xunit;
 
-public class RepeatTest
+public sealed class RepeatTest
 {
     [Fact]
     public void ExecuteNonQueryRepeat()
@@ -19,7 +19,6 @@ public class RepeatTest
         Assert.Equal(1, value);
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Ignore")]
     [Fact]
     public void ExecuteReaderRepeat()
     {
@@ -35,7 +34,9 @@ public class RepeatTest
             new object[] { 3, "Employee3" }
         };
 
+#pragma warning disable CA2000
         using var con = new MockRepeatDbConnection(new MockDataReader(columns, rows));
+#pragma warning restore CA2000
         var list = con.Query<Employee>("SELECT COUNT(*) FROM Employee").ToList();
         Assert.Equal(3, list.Count);
 

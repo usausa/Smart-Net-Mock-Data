@@ -4,7 +4,7 @@ using Smart.Data.Mapper;
 using Smart.Mock.Infrastructure;
 using Smart.Mock.Models;
 
-public class EmployeeService
+public sealed class EmployeeService
 {
     private IConnectionFactory ConnectionFactory { get; }
 

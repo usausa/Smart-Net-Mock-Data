@@ -6,9 +6,8 @@ using Smart.Mock.Infrastructure;
 
 using Xunit;
 
-public class EmployeeServiceTest
+public sealed class EmployeeServiceTest
 {
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Ignore")]
     [Fact]
     public void QueryEmployeeList()
     {
@@ -24,7 +23,9 @@ public class EmployeeServiceTest
             new object[] { 3, "Employee3" }
         };
 
+#pragma warning disable CA2000
         var connection = new MockDbConnection();
+#pragma warning restore CA2000
         connection.SetupCommand(cmd => cmd.SetupResult(new MockDataReader(columns, rows)));
 
         var service = new EmployeeService(new CallbackConnectionFactory(() => connection));

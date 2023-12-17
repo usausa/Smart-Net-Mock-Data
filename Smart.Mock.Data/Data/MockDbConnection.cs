@@ -63,12 +63,14 @@ public sealed class MockDbConnection : DbConnection
         setupedCommands.Enqueue(command);
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Reliability", "CA2000:DisposeObjectsBeforeLosingScope", Justification = "Factory")]
+#pragma warning disable CA1062
     public void SetupCommand(Action<MockDbCommand> action)
     {
+#pragma warning disable CA2000
         var command = new MockDbCommand();
+#pragma warning restore CA2000
         action(command);
         setupedCommands.Enqueue(command);
     }
+#pragma warning restore CA1062
 }

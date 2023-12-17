@@ -6,7 +6,7 @@ using Smart.Mock.Data.SqlServer;
 
 using Xunit;
 
-public class SqlServerTest
+public sealed class SqlServerTest
 {
     [Fact]
     public void ValidSqlExecute()

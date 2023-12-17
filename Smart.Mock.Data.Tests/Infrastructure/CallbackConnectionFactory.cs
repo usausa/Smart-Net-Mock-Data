@@ -2,7 +2,7 @@ namespace Smart.Mock.Infrastructure;
 
 using System.Data.Common;
 
-public class CallbackConnectionFactory : IConnectionFactory
+public sealed class CallbackConnectionFactory : IConnectionFactory
 {
     private readonly Func<DbConnection> factory;
 

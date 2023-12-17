@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 
-public class MockDbParameter : DbParameter
+public sealed class MockDbParameter : DbParameter
 {
     public override DbType DbType { get; set; }
 

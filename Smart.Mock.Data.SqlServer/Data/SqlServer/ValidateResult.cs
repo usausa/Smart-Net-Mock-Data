@@ -5,13 +5,13 @@ using System.Text;
 
 using Microsoft.SqlServer.TransactSql.ScriptDom;
 
-public class ValidateResult
+public sealed class ValidateResult
 {
     public bool Valid => Errors.Count == 0;
 
     public IList<ParseError> Errors { get; } = new List<ParseError>();
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
+#pragma warning disable CA1062
     public void AddErrors(IList<ParseError> errors)
     {
         foreach (var error in errors)
@@ -19,6 +19,7 @@ public class ValidateResult
             Errors.Add(error);
         }
     }
+#pragma warning restore CA1062
 
     public override string ToString()
     {

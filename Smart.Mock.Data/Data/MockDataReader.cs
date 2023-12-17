@@ -4,7 +4,7 @@ using System.Collections;
 using System.Data.Common;
 using System.Globalization;
 
-public class MockColumn
+public sealed class MockColumn
 {
     public Type DataType { get; }
 
@@ -17,7 +17,7 @@ public class MockColumn
     }
 }
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
+#pragma warning disable CA1010
 public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 {
     private readonly MockColumn[] columns;
@@ -96,7 +96,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     public override object GetValue(int ordinal) =>
         IsDBNull(ordinal) ? DBNull.Value : (rows[current][ordinal] ?? DBNull.Value);
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
+#pragma warning disable CA1062
     public override int GetValues(object[] values)
     {
         var length = Math.Min(values.Length, columns.Length);
@@ -107,6 +107,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
         return length;
     }
+#pragma warning restore CA1062
 
     public override bool GetBoolean(int ordinal) =>
         Convert.ToBoolean(rows[current][ordinal], CultureInfo.InvariantCulture);
@@ -175,3 +176,4 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     public override string GetString(int ordinal) =>
         Convert.ToString(rows[current][ordinal], CultureInfo.InvariantCulture)!;
 }
+#pragma warning restore CA1010

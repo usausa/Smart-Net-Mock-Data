@@ -6,7 +6,7 @@ using Smart.Mock.Models;
 
 using Xunit;
 
-public class AsyncTest
+public sealed class AsyncTest
 {
     [Fact]
     public async Task ExecuteNonQueryAsync()

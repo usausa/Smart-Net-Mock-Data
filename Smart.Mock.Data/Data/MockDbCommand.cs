@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 
-public class ExecutedCommand
+public sealed class ExecutedCommand
 {
     public string CommandText { get; }
 

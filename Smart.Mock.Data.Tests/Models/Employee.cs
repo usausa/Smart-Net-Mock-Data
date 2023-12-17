@@ -1,6 +1,6 @@
 namespace Smart.Mock.Models;
 
-public class Employee
+public sealed class Employee
 {
     public int Id { get; set; }
 

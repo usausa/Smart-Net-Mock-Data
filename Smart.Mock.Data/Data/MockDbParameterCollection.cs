@@ -3,8 +3,8 @@ namespace Smart.Mock.Data;
 using System.Collections;
 using System.Data.Common;
 
-[System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1010:CollectionsShouldImplementGeneric", Justification = "Ignore")]
-public class MockDbParameterCollection : DbParameterCollection
+#pragma warning disable CA1010
+public sealed class MockDbParameterCollection : DbParameterCollection
 {
     private readonly List<MockDbParameter> parameters = [];
 
@@ -72,3 +72,4 @@ public class MockDbParameterCollection : DbParameterCollection
         return index;
     }
 }
+#pragma warning restore CA1010

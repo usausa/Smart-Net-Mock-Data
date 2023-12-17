@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 
-public class MockRepeatDbCommand : DbCommand
+public sealed class MockRepeatDbCommand : DbCommand
 {
     private readonly object? result;
 

@@ -9,7 +9,7 @@ public static class MockExtensions
         return ValidateSql(command, DefaultParser.Create());
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
+#pragma warning disable CA1062
     public static ValidateResult ValidateSql(this MockDbCommand command, TSqlParser parser)
     {
         var result = new ValidateResult();
@@ -25,13 +25,14 @@ public static class MockExtensions
 
         return result;
     }
+#pragma warning restore CA1062
 
     public static ValidateResult ValidateSql(this MockDbConnection connection)
     {
         return ValidateSql(connection, DefaultParser.Create());
     }
 
-    [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1062:ValidateArgumentsOfPublicMethods", Justification = "Ignore")]
+#pragma warning disable CA1062
     public static ValidateResult ValidateSql(this MockDbConnection connection, TSqlParser parser)
     {
         var result = new ValidateResult();
@@ -50,4 +51,5 @@ public static class MockExtensions
 
         return result;
     }
+#pragma warning restore CA1062
 }

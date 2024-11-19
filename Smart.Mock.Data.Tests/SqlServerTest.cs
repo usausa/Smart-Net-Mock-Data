@@ -10,7 +10,7 @@ public sealed class SqlServerTest
     public void ValidSqlExecute()
     {
         using var connection = new MockDbConnection();
-        connection.SetupCommand(cmd => cmd.SetupResult(0));
+        connection.SetupCommand(static cmd => cmd.SetupResult(0));
 
         connection.Execute("UPDATE Employee SET Name = @Name WHERE Id = @Id", new { Id = 1, Name = "Employee1" });
 
@@ -22,7 +22,7 @@ public sealed class SqlServerTest
     public void InvalidSqlExecute()
     {
         using var connection = new MockDbConnection();
-        connection.SetupCommand(cmd => cmd.SetupResult(0));
+        connection.SetupCommand(static cmd => cmd.SetupResult(0));
 
         connection.Execute("UPDATE Employee Name = @Name WHERE Id = @Id", new { Id = 1, Name = "Employee1" });
 

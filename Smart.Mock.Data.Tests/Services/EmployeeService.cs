@@ -15,7 +15,7 @@ public sealed class EmployeeService
 
     public IList<Employee> QueryEmployeeList()
     {
-        return ConnectionFactory.Using(con =>
+        return ConnectionFactory.Using(static con =>
             con.QueryList<Employee>("SELECT * FROM Employee"));
     }
 }

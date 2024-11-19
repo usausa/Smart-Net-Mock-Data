@@ -4,7 +4,7 @@ using Microsoft.SqlServer.TransactSql.ScriptDom;
 
 public static class DefaultParser
 {
-    private static Func<TSqlParser> parserFactory = () => new TSql130Parser(true);
+    private static Func<TSqlParser> parserFactory = static () => new TSql130Parser(true);
 
     public static void SetFactory(Func<TSqlParser> factory)
     {

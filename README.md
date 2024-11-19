@@ -1,6 +1,6 @@
 # Smart.Mock.Data .NET - mock data library for .NET
 
-[![NuGet Badge](https://buildstats.info/nuget/Usa.Smart.Mock.Data)](https://www.nuget.org/packages/Usa.Smart.Mock.Data/)
+[![NuGet](https://img.shields.io/nuget/v/Usa.Smart.Mock.Data.svg)](https://www.nuget.org/packages/Usa.Smart.Mock.Data)
 
 ## What is this?
 

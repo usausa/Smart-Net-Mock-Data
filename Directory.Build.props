@@ -7,7 +7,7 @@
     <Deterministic>true</Deterministic>
     <MSBuildWarningsAsMessages>SA0001</MSBuildWarningsAsMessages>
     <WarningsAsErrors>nullable</WarningsAsErrors>
-    <NoWarn>EnableGenerateDocumentationFile;NU1901;NU1902;NU1903</NoWarn>
+    <NoWarn>EnableGenerateDocumentationFile;NU1903</NoWarn>
     <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
   </PropertyGroup>
 

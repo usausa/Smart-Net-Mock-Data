@@ -54,11 +54,3 @@ using (var con = new MockDbConnection())
     Assert.Equal(3, list.Count);
 }
 ```
-
-## NuGet
-
-| Package |
-|---------------------|
-| [![NuGet Badge](https://buildstats.info/nuget/Usa.Smart.Mock.Data)](https://www.nuget.org/packages/Usa.Smart.Mock.Data/) |
-| [![NuGet Badge](https://buildstats.info/nuget/Usa.Smart.Mock.Data.SqlServer)](https://www.nuget.org/packages/Usa.Smart.Mock.Data.SqlServer/) |
-

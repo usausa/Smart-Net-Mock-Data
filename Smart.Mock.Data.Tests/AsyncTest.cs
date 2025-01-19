@@ -4,6 +4,7 @@ using Smart.Data.Mapper;
 using Smart.Mock.Data;
 using Smart.Mock.Models;
 
+#pragma warning disable xUnit1051
 public sealed class AsyncTest
 {
     [Fact]

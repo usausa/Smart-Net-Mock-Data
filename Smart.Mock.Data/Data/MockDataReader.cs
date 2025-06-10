@@ -22,11 +22,15 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 {
     private readonly MockColumn[] columns;
 
-    private readonly object?[][] rows;
+    private readonly List<object?[][]> rowSet = new();
+
+    private object?[][] currentRows;
 
     private bool closed;
 
-    private int current = -1;
+    private int currentRow = -1;
+
+    private int currentSet;
 
     public override bool IsClosed => closed;
 
@@ -34,24 +38,32 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     public override int FieldCount => columns.Length;
 
-    public override int RecordsAffected => rows.Length;
+    public override int RecordsAffected => currentRows.Length;
 
-    public override bool HasRows => rows.Length > 0;
+    public override bool HasRows => currentRows.Length > 0;
 
-    public override object this[int ordinal] => rows[current][ordinal] ?? DBNull.Value;
+    public override object this[int ordinal] => currentRows[currentRow][ordinal] ?? DBNull.Value;
 
-    public override object this[string name] => rows[current][GetOrdinal(name)] ?? DBNull.Value;
+    public override object this[string name] => currentRows[currentRow][GetOrdinal(name)] ?? DBNull.Value;
 
     public MockDataReader(MockColumn[] columns, IEnumerable<object[]> rows)
     {
         this.columns = columns;
-        this.rows = rows.ToArray();
+        currentRows = rows.ToArray();
+        rowSet.Add(currentRows);
+    }
+
+    public MockDataReader Append(IEnumerable<object[]> rows)
+    {
+        rowSet.Add(rows.ToArray());
+        return this;
     }
 
     public void Reset()
     {
         closed = false;
-        current = -1;
+        currentSet = 0;
+        currentRow = -1;
     }
 
     public override void Close()
@@ -62,16 +74,26 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     public override IEnumerator GetEnumerator() => new DbEnumerator(this, false);
 
-    public override bool NextResult() => current < rows.Length;
+    public override bool NextResult()
+    {
+        currentSet++;
+        if (currentSet < rowSet.Count)
+        {
+            currentRows = rowSet[currentSet];
+            return true;
+        }
+
+        return false;
+    }
 
     public override bool Read()
     {
-        current++;
-        return current < rows.Length;
+        currentRow++;
+        return currentRow < currentRows.Length;
     }
 
     public override bool IsDBNull(int ordinal) =>
-        rows[current][ordinal] is DBNull || rows[current][ordinal] is null;
+        currentRows[currentRow][ordinal] is DBNull || currentRows[currentRow][ordinal] is null;
 
     public override string GetDataTypeName(int ordinal) => columns[ordinal].DataType.Name;
 
@@ -94,7 +116,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     }
 
     public override object GetValue(int ordinal) =>
-        IsDBNull(ordinal) ? DBNull.Value : (rows[current][ordinal] ?? DBNull.Value);
+        IsDBNull(ordinal) ? DBNull.Value : (currentRows[currentRow][ordinal] ?? DBNull.Value);
 
 #pragma warning disable CA1062
     public override int GetValues(object[] values)
@@ -110,14 +132,14 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 #pragma warning restore CA1062
 
     public override bool GetBoolean(int ordinal) =>
-        Convert.ToBoolean(rows[current][ordinal], CultureInfo.InvariantCulture);
+        Convert.ToBoolean(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture);
 
     public override byte GetByte(int ordinal) =>
-        Convert.ToByte(rows[current][ordinal], CultureInfo.InvariantCulture);
+        Convert.ToByte(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture);
 
     public override long GetBytes(int ordinal, long dataOffset, byte[]? buffer, int bufferOffset, int length)
     {
-        if ((buffer is not null) && (rows[current][ordinal] is byte[] bytes))
+        if ((buffer is not null) && (currentRows[currentRow][ordinal] is byte[] bytes))
         {
             var result = Math.Min(bytes.Length - (int)dataOffset, length);
             Buffer.BlockCopy(bytes, (int)dataOffset, buffer, bufferOffset, result);
@@ -128,11 +150,11 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     }
 
     public override char GetChar(int ordinal) =>
-        Convert.ToChar(rows[current][ordinal], CultureInfo.InvariantCulture);
+        Convert.ToChar(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture);
 
     public override long GetChars(int ordinal, long dataOffset, char[]? buffer, int bufferOffset, int length)
     {
-        if ((buffer is not null) && (rows[current][ordinal] is char[] chars))
+        if ((buffer is not null) && (currentRows[currentRow][ordinal] is char[] chars))
         {
             var result = Math.Min(chars.Length - (int)dataOffset, length);
             Array.Copy(chars, (int)dataOffset, buffer, bufferOffset, result);
@@ -143,20 +165,20 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     }
 
     public override DateTime GetDateTime(int ordinal) =>
-        Convert.ToDateTime(rows[current][ordinal], CultureInfo.InvariantCulture);
+        Convert.ToDateTime(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture);
 
     public override decimal GetDecimal(int ordinal) =>
-        Convert.ToDecimal(rows[current][ordinal], CultureInfo.InvariantCulture);
+        Convert.ToDecimal(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture);
 
     public override double GetDouble(int ordinal) =>
-        Convert.ToDouble(rows[current][ordinal], CultureInfo.InvariantCulture);
+        Convert.ToDouble(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture);
 
     public override float GetFloat(int ordinal) =>
-        Convert.ToSingle(rows[current][ordinal], CultureInfo.InvariantCulture);
+        Convert.ToSingle(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture);
 
     public override Guid GetGuid(int ordinal)
     {
-        if (rows[current][ordinal] is Guid guid)
+        if (currentRows[currentRow][ordinal] is Guid guid)
         {
             return guid;
         }
@@ -165,15 +187,15 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     }
 
     public override short GetInt16(int ordinal) =>
-        Convert.ToInt16(rows[current][ordinal], CultureInfo.InvariantCulture);
+        Convert.ToInt16(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture);
 
     public override int GetInt32(int ordinal) =>
-        Convert.ToInt32(rows[current][ordinal], CultureInfo.InvariantCulture);
+        Convert.ToInt32(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture);
 
     public override long GetInt64(int ordinal) =>
-        Convert.ToInt64(rows[current][ordinal], CultureInfo.InvariantCulture);
+        Convert.ToInt64(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture);
 
     public override string GetString(int ordinal) =>
-        Convert.ToString(rows[current][ordinal], CultureInfo.InvariantCulture)!;
+        Convert.ToString(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture)!;
 }
 #pragma warning restore CA1010

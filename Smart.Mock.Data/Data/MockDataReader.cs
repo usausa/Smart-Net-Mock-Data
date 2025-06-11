@@ -20,9 +20,11 @@ public sealed class MockColumn
 #pragma warning disable CA1010
 public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 {
-    private readonly MockColumn[] columns;
+    private readonly List<MockColumn[]> columnsSet = new();
 
     private readonly List<object?[][]> rowSet = new();
+
+    private MockColumn[] currentColumns;
 
     private object?[][] currentRows;
 
@@ -36,7 +38,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     public override int Depth => 0;
 
-    public override int FieldCount => columns.Length;
+    public override int FieldCount => currentColumns.Length;
 
     public override int RecordsAffected => currentRows.Length;
 
@@ -48,13 +50,15 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     public MockDataReader(MockColumn[] columns, IEnumerable<object[]> rows)
     {
-        this.columns = columns;
+        currentColumns = columns;
         currentRows = rows.ToArray();
+        columnsSet.Add(currentColumns);
         rowSet.Add(currentRows);
     }
 
-    public MockDataReader Append(IEnumerable<object[]> rows)
+    public MockDataReader Append(MockColumn[] columns, IEnumerable<object[]> rows)
     {
+        columnsSet.Add(columns);
         rowSet.Add(rows.ToArray());
         return this;
     }
@@ -64,6 +68,8 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
         closed = false;
         currentSet = 0;
         currentRow = -1;
+        currentColumns = columnsSet[0];
+        currentRows = rowSet[0];
     }
 
     public override void Close()
@@ -77,8 +83,10 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     public override bool NextResult()
     {
         currentSet++;
-        if (currentSet < rowSet.Count)
+        if (currentSet < columnsSet.Count)
         {
+            currentRow = -1;
+            currentColumns = columnsSet[currentSet];
             currentRows = rowSet[currentSet];
             return true;
         }
@@ -95,15 +103,15 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     public override bool IsDBNull(int ordinal) =>
         currentRows[currentRow][ordinal] is DBNull || currentRows[currentRow][ordinal] is null;
 
-    public override string GetDataTypeName(int ordinal) => columns[ordinal].DataType.Name;
+    public override string GetDataTypeName(int ordinal) => currentColumns[ordinal].DataType.Name;
 
-    public override Type GetFieldType(int ordinal) => columns[ordinal].DataType;
+    public override Type GetFieldType(int ordinal) => currentColumns[ordinal].DataType;
 
-    public override string GetName(int ordinal) => columns[ordinal].Name;
+    public override string GetName(int ordinal) => currentColumns[ordinal].Name;
 
     public override int GetOrdinal(string name)
     {
-        var columnsLocal = columns;
+        var columnsLocal = currentColumns;
         for (var i = 0; i < columnsLocal.Length; i++)
         {
             if (String.Equals(columnsLocal[i].Name, name, StringComparison.OrdinalIgnoreCase))
@@ -121,7 +129,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 #pragma warning disable CA1062
     public override int GetValues(object[] values)
     {
-        var length = Math.Min(values.Length, columns.Length);
+        var length = Math.Min(values.Length, currentColumns.Length);
         for (var i = 0; i < length; i++)
         {
             values[i] = GetValue(i);

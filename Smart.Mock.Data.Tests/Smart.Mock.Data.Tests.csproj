@@ -21,7 +21,7 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
     <PackageReference Include="Microsoft.Testing.Extensions.CodeCoverage" Version="18.1.0" />
     <PackageReference Include="Microsoft.SqlServer.DacFx" Version="170.2.70" />
-    <PackageReference Include="Usa.Smart.Data.Mapper" Version="2.6.1" />
+    <PackageReference Include="Usa.Smart.Data.Mapper" Version="2.7.0" />
     <PackageReference Include="xunit.v3.mtp-v2" Version="3.2.0" />
   </ItemGroup>
 

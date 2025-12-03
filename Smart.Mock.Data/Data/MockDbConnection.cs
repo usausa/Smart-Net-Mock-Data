@@ -53,7 +53,8 @@ public sealed class MockDbConnection : DbConnection
 
     protected override DbCommand CreateDbCommand()
     {
-        var command = setupedCommands.Count > 0 ? setupedCommands.Dequeue() : new MockDbCommand { Connection = this };
+        var command = setupedCommands.Count > 0 ? setupedCommands.Dequeue() : new MockDbCommand();
+        command.Connection = this;
         commands.Add(command);
         return command;
     }

@@ -26,6 +26,8 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     private MockColumn[] currentColumns;
 
+    private Dictionary<string, int> currentOrdinals = default!;
+
     private object?[][] currentRows;
 
     private bool closed;
@@ -51,9 +53,17 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     public MockDataReader(MockColumn[] columns, IEnumerable<object[]> rows)
     {
         currentColumns = columns;
+        UpdateOrdinals();
         currentRows = rows.ToArray();
         columnsSet.Add(currentColumns);
         rowSet.Add(currentRows);
+    }
+
+    private void UpdateOrdinals()
+    {
+        currentOrdinals = currentColumns
+            .Select((col, index) => new { col.Name, Index = index })
+            .ToDictionary(x => x.Name, x => x.Index, StringComparer.OrdinalIgnoreCase);
     }
 
     public MockDataReader Append(MockColumn[] columns, IEnumerable<object[]> rows)
@@ -69,6 +79,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
         currentSet = 0;
         currentRow = -1;
         currentColumns = columnsSet[0];
+        UpdateOrdinals();
         currentRows = rowSet[0];
     }
 
@@ -87,6 +98,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
         {
             currentRow = -1;
             currentColumns = columnsSet[currentSet];
+            UpdateOrdinals();
             currentRows = rowSet[currentSet];
             return true;
         }
@@ -111,13 +123,9 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     public override int GetOrdinal(string name)
     {
-        var columnsLocal = currentColumns;
-        for (var i = 0; i < columnsLocal.Length; i++)
+        if (currentOrdinals.TryGetValue(name, out var ordinal))
         {
-            if (String.Equals(columnsLocal[i].Name, name, StringComparison.OrdinalIgnoreCase))
-            {
-                return i;
-            }
+            return ordinal;
         }
 
         throw new ArgumentException($"Column {name} is not found.", nameof(name));

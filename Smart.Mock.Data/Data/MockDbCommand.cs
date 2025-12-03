@@ -64,6 +64,11 @@ public sealed class MockDbCommand : DbCommand
 
     public override int ExecuteNonQuery()
     {
+        if (setupedResults.Count == 0)
+        {
+            throw new InvalidOperationException("No result has been setup for this command.");
+        }
+
         var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
         executedCommands.Add(command);
         Executing?.Invoke(command);
@@ -72,6 +77,11 @@ public sealed class MockDbCommand : DbCommand
 
     public override object? ExecuteScalar()
     {
+        if (setupedResults.Count == 0)
+        {
+            throw new InvalidOperationException("No result has been setup for this command.");
+        }
+
         var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
         executedCommands.Add(command);
         Executing?.Invoke(command);
@@ -80,6 +90,11 @@ public sealed class MockDbCommand : DbCommand
 
     protected override DbDataReader ExecuteDbDataReader(CommandBehavior behavior)
     {
+        if (setupedResults.Count == 0)
+        {
+            throw new InvalidOperationException("No result has been setup for this command.");
+        }
+
         var command = new ExecutedCommand(CommandText, CommandTimeout, CommandType, parameters);
         executedCommands.Add(command);
         Executing?.Invoke(command);

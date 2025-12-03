@@ -50,6 +50,8 @@ public sealed class MockRepeatDbConnection : DbConnection
 
     protected override DbCommand CreateDbCommand()
     {
-        return new MockRepeatDbCommand(result);
+        var command = new MockRepeatDbCommand(result);
+        command.Connection = this;
+        return command;
     }
 }

@@ -50,6 +50,13 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     public override object this[string name] => currentRows[currentRow][GetOrdinal(name)] ?? DBNull.Value;
 
+    public MockDataReader()
+    {
+        currentColumns = Array.Empty<MockColumn>();
+        currentRows = Array.Empty<object?[]>();
+        UpdateOrdinals();
+    }
+
     public MockDataReader(MockColumn[] columns, IEnumerable<object[]> rows)
     {
         currentColumns = columns;
@@ -70,6 +77,39 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     {
         columnsSet.Add(columns);
         rowSet.Add(rows.ToArray());
+        return this;
+    }
+
+    public MockDataReader Append<T>(IEnumerable<T> entities)
+        where T : class
+    {
+#pragma warning disable CA1851 // Possible multiple enumerations of 'IEnumerable' collection
+        if (entities != null && entities.Any())
+        {
+            var objectType = entities.First().GetType();
+            var columns = objectType.GetProperties()
+                .Select(prop => new MockColumn(prop.PropertyType, prop.Name))
+                .ToArray();
+            columnsSet.Add(columns);
+            UpdateOrdinals();
+
+            List<object?[]> rows = new List<object?[]>();
+            foreach (var entity in entities!)
+            {
+                var values = columns.Select(col => objectType.GetProperty(col.Name)!.GetValue(entity));
+                rows.Add(values.ToArray());
+            }
+
+            if (rowSet.Count == 0)
+            {
+                currentColumns = columns;
+                currentRows = rows.ToArray();
+            }
+
+            rowSet.Add(rows.ToArray());
+        }
+#pragma warning restore CA1851 // Possible multiple enumerations of 'IEnumerable' collection
+
         return this;
     }
 

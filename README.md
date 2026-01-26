@@ -56,7 +56,7 @@ using (var con = new MockDbConnection())
 ```
 
 ```csharp
-// ExecureReader - DataReader Objects List
+// ExecuteReader - DataReader Objects List
 var entities = new List<Employee>
 {
     new Employee { Id = 1, Name = "Employee1" },

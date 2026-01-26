@@ -36,6 +36,26 @@ public sealed class EmployeeServiceTest
     }
 
     [Fact]
+    public void QueryEmployeeByIdObjectsEmpty()
+    {
+#pragma warning disable CA2000
+        var connection = new MockDbConnection();
+#pragma warning restore CA2000
+        connection.SetupCommand(cmd => cmd.SetupResult(new MockDataReader()));
+
+        var service = new EmployeeService(new CallbackConnectionFactory(() => connection));
+
+        // Test
+        var list = service.QueryEmployeeList();
+
+        // Assert
+        Assert.Empty(list);
+
+        var result = connection.ValidateSql();
+        Assert.True(result.Valid, result.ToString());
+    }
+
+    [Fact]
     public void QueryEmployeeList()
     {
         var columns = new[]

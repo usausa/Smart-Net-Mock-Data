@@ -54,3 +54,21 @@ using (var con = new MockDbConnection())
     Assert.Equal(3, list.Count);
 }
 ```
+
+```csharp
+// ExecuteReader from typed source
+using (var con = new MockDbConnection())
+{
+    var entities = new List<Employee>
+    {
+        new() { Id = 1, Name = "Employee1" },
+        new() { Id = 2, Name = "Employee2" },
+        new() { Id = 3, Name = "Employee3" }
+    };
+    con.SetupCommand(cmd => cmd.SetupResult(MockHelper.CreateReader(entities)));
+
+    var list = (await con.QueryAsync<Employee>("SELECT COUNT(*) FROM Employee")).ToList();
+
+    Assert.Equal(3, list.Count);
+}
+```

@@ -56,22 +56,19 @@ using (var con = new MockDbConnection())
 ```
 
 ```csharp
-// ExecuteReader - DataReader Objects List
-var entities = new List<Employee>
+// ExecuteReader from typed source
+using (var con = new MockDbConnection())
 {
-    new Employee { Id = 1, Name = "Employee1" },
-    new Employee { Id = 2, Name = "Employee2" },
-    new Employee { Id = 3, Name = "Employee3" }
-};
+    var entities = new List<Employee>
+    {
+        new() { Id = 1, Name = "Employee1" },
+        new() { Id = 2, Name = "Employee2" },
+        new() { Id = 3, Name = "Employee3" }
+    };
+    con.SetupCommand(cmd => cmd.SetupResult(MockHelper.CreateReader(entities)));
 
-var connection = new MockDbConnection();
-connection.SetupCommand(cmd => cmd.SetupResult(new MockDataReader().Append(entities)));
+    var list = (await con.QueryAsync<Employee>("SELECT COUNT(*) FROM Employee")).ToList();
 
-var service = new EmployeeService(new CallbackConnectionFactory(() => connection));
-
-// Test
-var list = service.QueryEmployeeList();
-
-// Assert
-Assert.Equal(3, list.Count);
+    Assert.Equal(3, list.Count);
+}
 ```

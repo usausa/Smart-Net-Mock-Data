@@ -6,7 +6,7 @@ public static class MockExtensions
 {
     public static ValidateResult ValidateSql(this MockDbCommand command)
     {
-        return ValidateSql(command, DefaultParser.Create());
+        return command.ValidateSql(DefaultParser.Create());
     }
 
 #pragma warning disable CA1062
@@ -29,7 +29,7 @@ public static class MockExtensions
 
     public static ValidateResult ValidateSql(this MockDbConnection connection)
     {
-        return ValidateSql(connection, DefaultParser.Create());
+        return connection.ValidateSql(DefaultParser.Create());
     }
 
 #pragma warning disable CA1062

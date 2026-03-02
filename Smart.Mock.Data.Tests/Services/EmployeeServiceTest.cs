@@ -1,5 +1,6 @@
 namespace Smart.Mock.Services;
 
+using Microsoft.SqlServer.Dac.Model;
 using Smart.Mock.Data;
 using Smart.Mock.Data.SqlServer;
 using Smart.Mock.Infrastructure;

@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 
+#pragma warning disable IDE0032
 public sealed class MockDbConnection : DbConnection
 {
     private readonly Queue<MockDbCommand> setupedCommands = new();
@@ -75,3 +76,4 @@ public sealed class MockDbConnection : DbConnection
     }
 #pragma warning restore CA1062
 }
+#pragma warning restore IDE0032

@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 
+#pragma warning disable IDE0032
 public sealed class MockRepeatDbConnection : DbConnection
 {
     private readonly object? result;
@@ -50,8 +51,11 @@ public sealed class MockRepeatDbConnection : DbConnection
 
     protected override DbCommand CreateDbCommand()
     {
-        var command = new MockRepeatDbCommand(result);
-        command.Connection = this;
+        var command = new MockRepeatDbCommand(result)
+        {
+            Connection = this
+        };
         return command;
     }
 }
+#pragma warning restore IDE0032

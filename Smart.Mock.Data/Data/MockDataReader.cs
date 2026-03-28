@@ -17,12 +17,13 @@ public sealed class MockColumn
     }
 }
 
+#pragma warning disable IDE0032
 #pragma warning disable CA1010
 public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 {
-    private readonly List<MockColumn[]> columnsSet = new();
+    private readonly List<MockColumn[]> columnsSet = [];
 
-    private readonly List<object?[][]> rowSet = new();
+    private readonly List<object?[][]> rowSet = [];
 
     private MockColumn[] currentColumns;
 
@@ -37,7 +38,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     private int currentSet;
 
     public override bool IsClosed => closed;
-
+x
     public override int Depth => 0;
 
     public override int FieldCount => currentColumns.Length;
@@ -215,3 +216,4 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
         Convert.ToString(currentRows[currentRow][ordinal], CultureInfo.InvariantCulture)!;
 }
 #pragma warning restore CA1010
+#pragma warning disable IDE0032

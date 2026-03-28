@@ -38,7 +38,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     private int currentSet;
 
     public override bool IsClosed => closed;
-x
+
     public override int Depth => 0;
 
     public override int FieldCount => currentColumns.Length;

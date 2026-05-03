@@ -21,8 +21,4 @@
     <ProjectReference Include="..\Smart.Mock.Data\Smart.Mock.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Update="Microsoft.SourceLink.GitHub" Version="10.0.202" />
-  </ItemGroup>
-
 </Project>

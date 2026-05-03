@@ -159,7 +159,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
         if ((buffer is not null) && (currentRows[currentRow][ordinal] is byte[] bytes))
         {
             var result = Math.Min(bytes.Length - (int)dataOffset, length);
-            Buffer.BlockCopy(bytes, (int)dataOffset, buffer, bufferOffset, result);
+            bytes.AsSpan((int)dataOffset, result).CopyTo(buffer.AsSpan(bufferOffset, result));
             return result;
         }
 
@@ -174,7 +174,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
         if ((buffer is not null) && (currentRows[currentRow][ordinal] is char[] chars))
         {
             var result = Math.Min(chars.Length - (int)dataOffset, length);
-            Array.Copy(chars, (int)dataOffset, buffer, bufferOffset, result);
+            chars.AsSpan((int)dataOffset, result).CopyTo(buffer.AsSpan(bufferOffset, result));
             return result;
         }
 

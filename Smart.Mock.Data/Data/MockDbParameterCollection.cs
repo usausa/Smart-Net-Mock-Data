@@ -2,6 +2,7 @@ namespace Smart.Mock.Data;
 
 using System.Collections;
 using System.Data.Common;
+using System.Runtime.InteropServices;
 
 #pragma warning disable CA1010
 public sealed class MockDbParameterCollection : DbParameterCollection
@@ -42,9 +43,10 @@ public sealed class MockDbParameterCollection : DbParameterCollection
 
     public override int IndexOf(string parameterName)
     {
-        for (var i = 0; i < parameters.Count; i++)
+        var span = CollectionsMarshal.AsSpan(parameters);
+        for (var i = 0; i < span.Length; i++)
         {
-            if (String.Equals(parameters[i].ParameterName, parameterName, StringComparison.OrdinalIgnoreCase))
+            if (String.Equals(span[i].ParameterName, parameterName, StringComparison.OrdinalIgnoreCase))
             {
                 return i;
             }

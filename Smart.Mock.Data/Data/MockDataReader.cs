@@ -62,9 +62,12 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     private void UpdateOrdinals()
     {
-        currentOrdinals = currentColumns
-            .Select((col, index) => new { col.Name, Index = index })
-            .ToDictionary(x => x.Name, x => x.Index, StringComparer.OrdinalIgnoreCase);
+        var ordinals = new Dictionary<string, int>(currentColumns.Length, StringComparer.OrdinalIgnoreCase);
+        for (var i = 0; i < currentColumns.Length; i++)
+        {
+            ordinals.TryAdd(currentColumns[i].Name, i);
+        }
+        currentOrdinals = ordinals;
     }
 
     public MockDataReader Append(MockColumn[] columns, IEnumerable<object[]> rows)

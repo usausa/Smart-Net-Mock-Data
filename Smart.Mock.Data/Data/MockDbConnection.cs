@@ -60,6 +60,10 @@ public sealed class MockDbConnection : DbConnection
         return command;
     }
 
+    public override bool CanCreateBatch => true;
+
+    protected override DbBatch CreateDbBatch() => new MockDbBatch { Connection = this };
+
     public void SetupCommand(MockDbCommand command)
     {
         setupedCommands.Enqueue(command);

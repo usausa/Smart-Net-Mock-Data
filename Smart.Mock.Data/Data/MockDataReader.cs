@@ -14,7 +14,7 @@ public sealed class MockColumn
     public MockColumn(Type dataType, string name)
     {
         DataType = dataType;
-        Name = new string(name);    // Convert to other object
+        Name = new string(name.AsSpan());    // Ensure distinct string instance
     }
 }
 
@@ -25,6 +25,8 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     private readonly List<MockColumn[]> columnsSet = [];
 
     private readonly List<object?[][]> rowSet = [];
+
+    private readonly List<Dictionary<string, int>> ordinalsSet = [];
 
     private MockColumn[] currentColumns;
 
@@ -55,26 +57,28 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     public MockDataReader(MockColumn[] columns, IEnumerable<object[]> rows)
     {
         currentColumns = columns;
-        UpdateOrdinals();
         currentRows = rows.ToArray();
+        currentOrdinals = BuildOrdinals(columns);
         columnsSet.Add(currentColumns);
         rowSet.Add(currentRows);
+        ordinalsSet.Add(currentOrdinals);
     }
 
-    private void UpdateOrdinals()
+    private static Dictionary<string, int> BuildOrdinals(MockColumn[] columns)
     {
-        var ordinals = new Dictionary<string, int>(currentColumns.Length, StringComparer.OrdinalIgnoreCase);
-        for (var i = 0; i < currentColumns.Length; i++)
+        var ordinals = new Dictionary<string, int>(columns.Length, StringComparer.OrdinalIgnoreCase);
+        for (var i = 0; i < columns.Length; i++)
         {
-            ordinals.TryAdd(currentColumns[i].Name, i);
+            ordinals.TryAdd(columns[i].Name, i);
         }
-        currentOrdinals = ordinals;
+        return ordinals;
     }
 
     public MockDataReader Append(MockColumn[] columns, IEnumerable<object[]> rows)
     {
         columnsSet.Add(columns);
         rowSet.Add(rows.ToArray());
+        ordinalsSet.Add(BuildOrdinals(columns));
         return this;
     }
 
@@ -84,7 +88,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
         currentSet = 0;
         currentRow = -1;
         currentColumns = columnsSet[0];
-        UpdateOrdinals();
+        currentOrdinals = ordinalsSet[0];
         currentRows = rowSet[0];
     }
 
@@ -103,7 +107,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
         {
             currentRow = -1;
             currentColumns = columnsSet[currentSet];
-            UpdateOrdinals();
+            currentOrdinals = ordinalsSet[currentSet];
             currentRows = rowSet[currentSet];
             return true;
         }

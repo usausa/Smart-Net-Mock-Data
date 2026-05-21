@@ -121,7 +121,7 @@ public sealed class MockDbBatch : DbBatch
     private List<ExecutedBatchCommand> CaptureAndRecord()
     {
         var list = new List<ExecutedBatchCommand>(batchCommands.Count);
-        foreach (MockDbBatchCommand cmd in batchCommands)
+        foreach (var cmd in batchCommands)
         {
             var snapshot = new ExecutedBatchCommand(cmd.CommandText, cmd.CommandType, cmd.ParametersInternal);
             executedBatchCommands.Add(snapshot);

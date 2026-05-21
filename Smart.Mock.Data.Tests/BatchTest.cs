@@ -1,8 +1,5 @@
 namespace Smart.Mock;
 
-using System.Data;
-using System.Data.Common;
-
 using Smart.Mock.Data;
 
 #pragma warning disable xUnit1051
@@ -73,7 +70,7 @@ public sealed class BatchTest
         mockBatch.SetupResult(1);
 
         IReadOnlyList<ExecutedBatchCommand>? captured = null;
-        mockBatch.Executing = cmds => captured = cmds;
+        mockBatch.Executing = c => captured = c;
 
         batch.ExecuteNonQuery();
 
@@ -107,7 +104,7 @@ public sealed class BatchTest
 
         var columns = new[] { new MockColumn(typeof(int), "Id") };
         var rows = new List<object[]> { new object[] { 1 } };
-        var reader = new MockDataReader(columns, rows);
+        using var reader = new MockDataReader(columns, rows);
 
         ((MockDbBatch)batch).SetupResult(reader);
 

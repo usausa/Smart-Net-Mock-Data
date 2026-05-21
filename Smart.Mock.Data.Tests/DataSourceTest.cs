@@ -35,7 +35,7 @@ public sealed class DataSourceTest
     public void ConnectionStringIsAssignedToConnection()
     {
         using var dataSource = new MockDbDataSource("Server=mock");
-        var mockCon = new MockDbConnection();
+        using var mockCon = new MockDbConnection();
         dataSource.SetupConnection(mockCon);
 
         using var con = dataSource.OpenConnection();

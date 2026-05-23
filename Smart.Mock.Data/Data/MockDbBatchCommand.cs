@@ -25,7 +25,9 @@ public sealed class MockDbBatchCommand : DbBatchCommand
     protected override DbParameterCollection DbParameterCollection => parameters;
 #pragma warning restore IDE0032
 
+#pragma warning disable IDE0032
     internal MockDbParameterCollection MockParameters => parameters;
+#pragma warning restore IDE0032
 
     public override bool CanCreateParameter => true;
 

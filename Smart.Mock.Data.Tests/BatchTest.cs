@@ -9,12 +9,12 @@ public sealed class BatchTest
     public void ExecuteNonQueryReturnSetupResult()
     {
         using var con = new MockDbConnection();
-        using var batch = con.CreateBatch();
+        using var batch = (MockDbBatch)con.CreateBatch();
 
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "UPDATE A SET X = 1" });
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "UPDATE B SET Y = 2" });
 
-        ((MockDbBatch)batch).SetupResult(2);
+        batch.SetupResult(2);
 
         var total = batch.ExecuteNonQuery();
 
@@ -25,13 +25,13 @@ public sealed class BatchTest
     public void ExecuteNonQueryRecordsAffectedAreAssigned()
     {
         using var con = new MockDbConnection();
-        using var batch = con.CreateBatch();
+        using var batch = (MockDbBatch)con.CreateBatch();
 
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "UPDATE A SET X = 1" });
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "UPDATE B SET Y = 2" });
 
-        ((MockDbBatch)batch).SetupResult(2);
-        ((MockDbBatch)batch).SetupRecordsAffected(1, 1);
+        batch.SetupResult(2);
+        batch.SetupRecordsAffected(1, 1);
 
         batch.ExecuteNonQuery();
 
@@ -43,30 +43,29 @@ public sealed class BatchTest
     public void ExecutedBatchCommandsAreRecorded()
     {
         using var con = new MockDbConnection();
-        using var batch = con.CreateBatch();
+        using var batch = (MockDbBatch)con.CreateBatch();
 
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "UPDATE A SET X = 1" });
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "UPDATE B SET Y = 2" });
 
-        ((MockDbBatch)batch).SetupResult(2);
+        batch.SetupResult(2);
 
         batch.ExecuteNonQuery();
 
-        var mockBatch = (MockDbBatch)batch;
-        Assert.Equal(2, mockBatch.ExecutedBatchCommands.Count);
-        Assert.Equal("UPDATE A SET X = 1", mockBatch.ExecutedBatchCommands[0].CommandText);
-        Assert.Equal("UPDATE B SET Y = 2", mockBatch.ExecutedBatchCommands[1].CommandText);
+        Assert.Equal(2, batch.ExecutedBatchCommands.Count);
+        Assert.Equal("UPDATE A SET X = 1", batch.ExecutedBatchCommands[0].CommandText);
+        Assert.Equal("UPDATE B SET Y = 2", batch.ExecutedBatchCommands[1].CommandText);
     }
 
     [Fact]
     public void ExecutingCallbackIsInvoked()
     {
         using var con = new MockDbConnection();
-        using var batch = con.CreateBatch();
+        using var batch = (MockDbBatch)con.CreateBatch();
 
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "UPDATE A SET X = 1" });
 
-        var mockBatch = (MockDbBatch)batch;
+        var mockBatch = batch;
         mockBatch.SetupResult(1);
 
         IReadOnlyList<ExecutedBatchCommand>? captured = null;
@@ -83,11 +82,11 @@ public sealed class BatchTest
     public void ExecuteScalarReturnSetupResult()
     {
         using var con = new MockDbConnection();
-        using var batch = con.CreateBatch();
+        using var batch = (MockDbBatch)con.CreateBatch();
 
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "SELECT COUNT(*) FROM Test" });
 
-        ((MockDbBatch)batch).SetupResult(42);
+        batch.SetupResult(42);
 
         var result = batch.ExecuteScalar();
 
@@ -98,7 +97,7 @@ public sealed class BatchTest
     public void ExecuteReaderReturnsMockDataReader()
     {
         using var con = new MockDbConnection();
-        using var batch = con.CreateBatch();
+        using var batch = (MockDbBatch)con.CreateBatch();
 
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "SELECT Id FROM Test" });
 
@@ -106,7 +105,7 @@ public sealed class BatchTest
         var rows = new List<object[]> { new object[] { 1 } };
         using var reader = new MockDataReader(columns, rows);
 
-        ((MockDbBatch)batch).SetupResult(reader);
+        batch.SetupResult(reader);
 
         using var result = batch.ExecuteReader();
 
@@ -119,12 +118,12 @@ public sealed class BatchTest
     {
 #pragma warning disable CA2007
         await using var con = new MockDbConnection();
-        await using var batch = con.CreateBatch();
+        await using var batch = (MockDbBatch)con.CreateBatch();
 #pragma warning restore CA2007
 
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "UPDATE A SET X = 1" });
 
-        ((MockDbBatch)batch).SetupResult(1);
+        batch.SetupResult(1);
 
         var total = await batch.ExecuteNonQueryAsync();
 
@@ -135,7 +134,7 @@ public sealed class BatchTest
     public void ThrowsWhenNoResultSetup()
     {
         using var con = new MockDbConnection();
-        using var batch = con.CreateBatch();
+        using var batch = (MockDbBatch)con.CreateBatch();
 
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "UPDATE A SET X = 1" });
 

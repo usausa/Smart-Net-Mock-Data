@@ -9,8 +9,7 @@ public sealed class DataSourceTest
     public void OpenConnectionReturnsSetupConnection()
     {
         using var dataSource = new MockDbDataSource("Server=mock");
-        dataSource.SetupConnection(static con =>
-            con.SetupCommand(static cmd => cmd.SetupResult(1)));
+        dataSource.SetupConnection(static con => con.SetupCommand(static cmd => cmd.SetupResult(1)));
 
         using var con = dataSource.OpenConnection();
 
@@ -21,8 +20,7 @@ public sealed class DataSourceTest
     public void ConnectionsHistoryIsRecorded()
     {
         using var dataSource = new MockDbDataSource("Server=mock");
-        dataSource.SetupConnection(static con =>
-            con.SetupCommand(static cmd => cmd.SetupResult(1)));
+        dataSource.SetupConnection(static con => con.SetupCommand(static cmd => cmd.SetupResult(1)));
 
         using var con = dataSource.OpenConnection();
 
@@ -47,8 +45,7 @@ public sealed class DataSourceTest
 #pragma warning disable CA2007
         await using var dataSource = new MockDbDataSource("Server=mock");
 #pragma warning restore CA2007
-        dataSource.SetupConnection(static con =>
-            con.SetupCommand(static cmd => cmd.SetupResult(1)));
+        dataSource.SetupConnection(static con => con.SetupCommand(static cmd => cmd.SetupResult(1)));
 
 #pragma warning disable CA2007
         await using var con = await dataSource.OpenConnectionAsync();

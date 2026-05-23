@@ -6,6 +6,7 @@ using System.Data.Common;
 public sealed class MockDbDataSource : DbDataSource
 {
     private readonly Queue<MockDbConnection> setupedConnections = new();
+
     private readonly List<MockDbConnection> connections = [];
 
     public override string ConnectionString { get; }

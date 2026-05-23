@@ -4,11 +4,10 @@ using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 
+#pragma warning disable IDE0032
 public sealed class MockDbBatchCommand : DbBatchCommand
 {
-#pragma warning disable IDE0032
     private readonly MockDbParameterCollection parameters = [];
-#pragma warning restore IDE0032
 
     private int recordsAffected;
 
@@ -21,15 +20,12 @@ public sealed class MockDbBatchCommand : DbBatchCommand
 
     internal void SetRecordsAffected(int value) => recordsAffected = value;
 
-#pragma warning disable IDE0032
     protected override DbParameterCollection DbParameterCollection => parameters;
-#pragma warning restore IDE0032
 
-#pragma warning disable IDE0032
     internal MockDbParameterCollection MockParameters => parameters;
-#pragma warning restore IDE0032
 
     public override bool CanCreateParameter => true;
 
     public override DbParameter CreateParameter() => new MockDbParameter();
 }
+#pragma warning restore IDE0032

@@ -21,7 +21,9 @@ public sealed class MockDbBatchCommand : DbBatchCommand
 
     internal void SetRecordsAffected(int value) => recordsAffected = value;
 
+#pragma warning disable IDE0032
     protected override DbParameterCollection DbParameterCollection => parameters;
+#pragma warning restore IDE0032
 
     internal MockDbParameterCollection MockParameters => parameters;
 

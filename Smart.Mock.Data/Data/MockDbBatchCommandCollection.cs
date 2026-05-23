@@ -21,7 +21,13 @@ public sealed class MockDbBatchCommandCollection : DbBatchCommandCollection
 
     public override bool Contains(DbBatchCommand item) => commands.Contains((MockDbBatchCommand)item);
 
-    public override void CopyTo(DbBatchCommand[] array, int arrayIndex) => ((ICollection<DbBatchCommand>)commands).CopyTo(array, arrayIndex);
+    public override void CopyTo(DbBatchCommand[] array, int arrayIndex)
+    {
+        for (var i = 0; i < commands.Count; i++)
+        {
+            array[arrayIndex + i] = commands[i];
+        }
+    }
 
     public override IEnumerator<DbBatchCommand> GetEnumerator() => commands.GetEnumerator();
 

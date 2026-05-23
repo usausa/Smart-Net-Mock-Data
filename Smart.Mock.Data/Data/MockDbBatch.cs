@@ -82,13 +82,13 @@ public sealed class MockDbBatch : DbBatch
         return (DbDataReader)setupedResults.Dequeue()!;
     }
 
-    public override Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken)
+    public override Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
         return Task.FromResult(ExecuteNonQuery());
     }
 
-    public override Task<object?> ExecuteScalarAsync(CancellationToken cancellationToken)
+    public override Task<object?> ExecuteScalarAsync(CancellationToken cancellationToken = default)
     {
         cancellationToken.ThrowIfCancellationRequested();
         return Task.FromResult(ExecuteScalar());
@@ -123,7 +123,7 @@ public sealed class MockDbBatch : DbBatch
         var list = new List<ExecutedBatchCommand>(batchCommands.Count);
         foreach (var cmd in batchCommands)
         {
-            var snapshot = new ExecutedBatchCommand(cmd.CommandText, cmd.CommandType, cmd.ParametersInternal);
+            var snapshot = new ExecutedBatchCommand(cmd.CommandText, cmd.CommandType, ((MockDbBatchCommand)cmd).MockParameters);
             executedBatchCommands.Add(snapshot);
             list.Add(snapshot);
         }

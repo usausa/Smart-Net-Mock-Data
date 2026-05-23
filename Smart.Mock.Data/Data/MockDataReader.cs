@@ -30,7 +30,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     private MockColumn[] currentColumns;
 
-    private Dictionary<string, int> currentOrdinals = default!;
+    private Dictionary<string, int> currentOrdinals;
 
     private object?[][] currentRows;
 

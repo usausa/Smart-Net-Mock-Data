@@ -6,7 +6,9 @@ using System.Diagnostics.CodeAnalysis;
 
 public sealed class MockDbBatchCommand : DbBatchCommand
 {
+#pragma warning disable IDE0032
     private readonly MockDbParameterCollection parameters = [];
+#pragma warning restore IDE0032
 
     private int recordsAffected;
 
@@ -21,7 +23,7 @@ public sealed class MockDbBatchCommand : DbBatchCommand
 
     protected override DbParameterCollection DbParameterCollection => parameters;
 
-    internal MockDbParameterCollection ParametersInternal => parameters;
+    internal MockDbParameterCollection MockParameters => parameters;
 
     public override bool CanCreateParameter => true;
 

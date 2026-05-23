@@ -1,7 +1,5 @@
 namespace Smart.Mock;
 
-using System.Data.Common;
-
 using Smart.Mock.Data;
 
 #pragma warning disable xUnit1051

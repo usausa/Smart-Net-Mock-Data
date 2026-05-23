@@ -12,7 +12,7 @@ public sealed class ValidateResult
     public IList<ParseError> Errors { get; } = [];
 
 #pragma warning disable CA1062
-    public void AddErrors(IList<ParseError> errors)
+    public void AddErrors(IEnumerable<ParseError> errors)
     {
         foreach (var error in errors)
         {
@@ -26,13 +26,7 @@ public sealed class ValidateResult
         var sb = new StringBuilder();
         foreach (var error in Errors)
         {
-            sb.AppendFormat(
-                CultureInfo.InvariantCulture,
-                "Error [{0}] (Line = {1}, Column = {2}) : '{3}'\r\n",
-                error.Number,
-                error.Line,
-                error.Column,
-                error.Message);
+            sb.Append(CultureInfo.InvariantCulture, $"Error [{error.Number}] (Line = {error.Line}, Column = {error.Column}) : '{error.Message}'\r\n");
         }
 
         return sb.ToString();

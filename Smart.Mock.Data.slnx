@@ -12,7 +12,6 @@
     <File Path="LICENSE" />
     <File Path="README.md" />
     <File Path="Smart.Mock.Data.sln.DotSettings" />
-    <File Path="test.runsettings" />
   </Folder>
   <Project Path="Smart.Mock.Data/Smart.Mock.Data.csproj" />
   <Project Path="Smart.Mock.Data.SqlServer/Smart.Mock.Data.SqlServer.csproj" />

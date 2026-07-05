@@ -23,7 +23,7 @@ public sealed class ValidateResult
 
     public override string ToString()
     {
-        var sb = new StringBuilder();
+        var sb = new StringBuilder(Errors.Count * 64);
         foreach (var error in Errors)
         {
             sb.Append(CultureInfo.InvariantCulture, $"Error [{error.Number}] (Line = {error.Line}, Column = {error.Column}) : '{error.Message}'\r\n");

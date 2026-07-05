@@ -175,7 +175,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     public override long GetBytes(int ordinal, long dataOffset, byte[]? buffer, int bufferOffset, int length)
     {
-        if ((buffer is not null) && (CurrentRow[ordinal] is byte[] bytes))
+        if ((buffer is not null) && (CurrentRow[ordinal] is byte[] bytes) && (dataOffset >= 0) && (dataOffset < bytes.Length) && (length > 0))
         {
             var result = Math.Min(bytes.Length - (int)dataOffset, length);
             bytes.AsSpan((int)dataOffset, result).CopyTo(buffer.AsSpan(bufferOffset, result));
@@ -190,7 +190,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
     public override long GetChars(int ordinal, long dataOffset, char[]? buffer, int bufferOffset, int length)
     {
-        if ((buffer is not null) && (CurrentRow[ordinal] is char[] chars))
+        if ((buffer is not null) && (CurrentRow[ordinal] is char[] chars) && (dataOffset >= 0) && (dataOffset < chars.Length) && (length > 0))
         {
             var result = Math.Min(chars.Length - (int)dataOffset, length);
             chars.AsSpan((int)dataOffset, result).CopyTo(buffer.AsSpan(bufferOffset, result));

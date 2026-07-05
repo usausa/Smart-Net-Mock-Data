@@ -37,7 +37,7 @@ public sealed class MockDbParameterCollection : DbParameterCollection
 
     public override bool Contains(string value) => IndexOf(value) != -1;
 
-    public override void CopyTo(Array array, int index) => parameters.CopyTo((MockDbParameter[])array, index);
+    public override void CopyTo(Array array, int index) => Array.Copy(parameters.ToArray(), 0, array, index, parameters.Count);
 
     public override int IndexOf(object value) => parameters.IndexOf((MockDbParameter)value);
 

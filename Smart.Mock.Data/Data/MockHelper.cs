@@ -29,9 +29,16 @@ public static class MockHelper
                 .ToArray();
     }
 
+    private static class PropertiesCache<T>
+    {
+        internal static readonly Dictionary<string, PropertyInfo> Value =
+            typeof(T).GetProperties().ToDictionary(static x => x.Name, static x => x, StringComparer.Ordinal);
+    }
+
     public static IEnumerable<object?[]> ToRows<T>(this IEnumerable<T> source, IEnumerable<MockColumn> columns)
     {
-        var props = columns.Select(static x => typeof(T).GetProperty(x.Name)!).ToArray();
+        var propertyMap = PropertiesCache<T>.Value;
+        var props = columns.Select(x => propertyMap[x.Name]).ToArray();
         return Iterator(source, props);
 
         static IEnumerable<object?[]> Iterator(IEnumerable<T> source, PropertyInfo[] props)

@@ -139,7 +139,7 @@ public sealed class MockDbBatch : DbBatch
         }
 
         var values = setupedRecordsAffected.Dequeue();
-        for (var i = 0; i < batchCommands.Count && i < values.Length; i++)
+        for (var i = 0; (i < batchCommands.Count) && (i < values.Length); i++)
         {
             ((MockDbBatchCommand)batchCommands[i]).SetRecordsAffected(values[i]);
         }

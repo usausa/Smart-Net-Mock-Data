@@ -69,7 +69,6 @@ public sealed class MockDbConnection : DbConnection
         setupedCommands.Enqueue(command);
     }
 
-#pragma warning disable CA1062
     public void SetupCommand(Action<MockDbCommand> action)
     {
 #pragma warning disable CA2000
@@ -78,6 +77,5 @@ public sealed class MockDbConnection : DbConnection
         action(command);
         setupedCommands.Enqueue(command);
     }
-#pragma warning restore CA1062
 }
 #pragma warning restore IDE0032

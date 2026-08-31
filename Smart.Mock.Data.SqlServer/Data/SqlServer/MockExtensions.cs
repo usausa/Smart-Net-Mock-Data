@@ -9,7 +9,6 @@ public static class MockExtensions
         return command.ValidateSql(DefaultParser.Create());
     }
 
-#pragma warning disable CA1062
     public static ValidateResult ValidateSql(this MockDbCommand command, TSqlParser parser)
     {
         var result = new ValidateResult();
@@ -25,14 +24,12 @@ public static class MockExtensions
 
         return result;
     }
-#pragma warning restore CA1062
 
     public static ValidateResult ValidateSql(this MockDbConnection connection)
     {
         return connection.ValidateSql(DefaultParser.Create());
     }
 
-#pragma warning disable CA1062
     public static ValidateResult ValidateSql(this MockDbConnection connection, TSqlParser parser)
     {
         var result = new ValidateResult();
@@ -51,5 +48,4 @@ public static class MockExtensions
 
         return result;
     }
-#pragma warning restore CA1062
 }

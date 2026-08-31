@@ -152,7 +152,6 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
         return val is null or DBNull ? DBNull.Value : val;
     }
 
-#pragma warning disable CA1062
     public override int GetValues(object[] values)
     {
         var row = CurrentRow;
@@ -165,7 +164,6 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
 
         return length;
     }
-#pragma warning restore CA1062
 
     public override bool GetBoolean(int ordinal) =>
         Convert.ToBoolean(CurrentRow[ordinal], CultureInfo.InvariantCulture);

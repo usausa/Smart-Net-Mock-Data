@@ -116,10 +116,8 @@ public sealed class BatchTest
     [Fact]
     public async Task ExecuteNonQueryAsyncReturnSetupResult()
     {
-#pragma warning disable CA2007
         await using var con = new MockDbConnection();
         await using var batch = (MockDbBatch)con.CreateBatch();
-#pragma warning restore CA2007
 
         batch.BatchCommands.Add(new MockDbBatchCommand { CommandText = "UPDATE A SET X = 1" });
 

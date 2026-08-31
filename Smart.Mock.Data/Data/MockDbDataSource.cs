@@ -30,7 +30,6 @@ public sealed class MockDbDataSource : DbDataSource
 
     public void SetupConnection(MockDbConnection connection) => setupedConnections.Enqueue(connection);
 
-#pragma warning disable CA1062
     public void SetupConnection(Action<MockDbConnection> action)
     {
 #pragma warning disable CA2000
@@ -39,6 +38,5 @@ public sealed class MockDbDataSource : DbDataSource
         action(connection);
         setupedConnections.Enqueue(connection);
     }
-#pragma warning restore CA1062
 }
 #pragma warning restore IDE0032

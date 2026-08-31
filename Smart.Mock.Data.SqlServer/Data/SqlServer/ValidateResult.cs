@@ -11,7 +11,6 @@ public sealed class ValidateResult
 
     public IList<ParseError> Errors { get; } = [];
 
-#pragma warning disable CA1062
     public void AddErrors(IEnumerable<ParseError> errors)
     {
         foreach (var error in errors)
@@ -19,7 +18,6 @@ public sealed class ValidateResult
             Errors.Add(error);
         }
     }
-#pragma warning restore CA1062
 
     public override string ToString()
     {

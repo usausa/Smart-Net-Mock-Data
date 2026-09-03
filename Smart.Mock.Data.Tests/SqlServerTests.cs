@@ -4,7 +4,7 @@ using Smart.Data.Mapper;
 using Smart.Mock.Data;
 using Smart.Mock.Data.SqlServer;
 
-public sealed class SqlServerTest
+public sealed class SqlServerTests
 {
     [Fact]
     public void ValidSqlExecute()

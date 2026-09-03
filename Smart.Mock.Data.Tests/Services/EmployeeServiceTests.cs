@@ -5,7 +5,7 @@ using Smart.Mock.Data.SqlServer;
 using Smart.Mock.Infrastructure;
 using Smart.Mock.Models;
 
-public sealed class EmployeeServiceTest
+public sealed class EmployeeServiceTests
 {
     [Fact]
     public void QueryEmployeeListByObjectSource()

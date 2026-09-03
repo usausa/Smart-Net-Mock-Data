@@ -5,7 +5,7 @@ using Smart.Mock.Data;
 using Smart.Mock.Models;
 
 #pragma warning disable xUnit1051
-public sealed class AsyncTest
+public sealed class AsyncTests
 {
     [Fact]
     public async Task ExecuteNonQueryAsync()

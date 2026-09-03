@@ -3,7 +3,7 @@ namespace Smart.Mock;
 using Smart.Mock.Data;
 
 #pragma warning disable xUnit1051
-public sealed class BatchTest
+public sealed class BatchTests
 {
     [Fact]
     public void ExecuteNonQueryReturnSetupResult()

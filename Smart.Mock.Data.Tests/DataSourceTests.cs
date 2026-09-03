@@ -3,7 +3,7 @@ namespace Smart.Mock;
 using Smart.Mock.Data;
 
 #pragma warning disable xUnit1051
-public sealed class DataSourceTest
+public sealed class DataSourceTests
 {
     [Fact]
     public void OpenConnectionReturnsSetupConnection()

@@ -4,7 +4,7 @@ using Smart.Data.Mapper;
 using Smart.Mock.Data;
 using Smart.Mock.Models;
 
-public sealed class RepeatTest
+public sealed class RepeatTests
 {
     [Fact]
     public void ExecuteNonQueryRepeat()

@@ -57,7 +57,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     public MockDataReader(MockColumn[] columns, IEnumerable<object[]> rows)
     {
         currentColumns = columns;
-        currentRows = rows.ToArray();
+        currentRows = [.. rows];
         currentOrdinals = BuildOrdinals(columns);
         columnsSet.Add(currentColumns);
         rowSet.Add(currentRows);
@@ -77,7 +77,7 @@ public sealed class MockDataReader : DbDataReader, IRepeatDataReader
     public MockDataReader Append(MockColumn[] columns, IEnumerable<object[]> rows)
     {
         columnsSet.Add(columns);
-        rowSet.Add(rows.ToArray());
+        rowSet.Add([.. rows]);
         ordinalsSet.Add(BuildOrdinals(columns));
         return this;
     }

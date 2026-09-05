@@ -35,10 +35,10 @@ public sealed class RepeatTests
 #pragma warning disable CA2000
         using var con = new MockRepeatDbConnection(new MockDataReader(columns, rows));
 #pragma warning restore CA2000
-        var list = con.Query<Employee>("SELECT COUNT(*) FROM Employee").ToList();
-        Assert.Equal(3, list.Count);
+        var list1 = con.Query<Employee>("SELECT COUNT(*) FROM Employee").ToList();
+        Assert.Equal(3, list1.Count);
 
-        list = con.Query<Employee>("SELECT COUNT(*) FROM Employee").ToList();
-        Assert.Equal(3, list.Count);
+        var list2 = con.Query<Employee>("SELECT COUNT(*) FROM Employee").ToList();
+        Assert.Equal(3, list2.Count);
     }
 }

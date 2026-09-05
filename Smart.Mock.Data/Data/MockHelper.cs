@@ -23,10 +23,12 @@ public static class MockHelper
 
     private static class ColumnsCache<T>
     {
+#pragma warning disable IDE0028
         internal static readonly MockColumn[] Value =
             typeof(T).GetProperties()
                 .Select(static x => new MockColumn(x.PropertyType, x.Name))
                 .ToArray();
+#pragma warning restore IDE0028
     }
 
     private static class PropertiesCache<T>
